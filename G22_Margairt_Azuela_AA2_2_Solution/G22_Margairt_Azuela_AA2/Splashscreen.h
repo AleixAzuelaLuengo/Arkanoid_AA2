@@ -10,6 +10,6 @@ public:
 	void Draw();
 
 private:
-	int tuputamadre;
+	
 };
 

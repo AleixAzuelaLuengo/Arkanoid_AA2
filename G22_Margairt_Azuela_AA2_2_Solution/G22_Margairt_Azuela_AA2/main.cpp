@@ -11,37 +11,10 @@ int main(int, char*[])
 	Menu menu;
 	GameManager gm = GameManager();
 	SceneType scene = SceneType::MENU;
-	while (scene != SceneType::END)
+	while (1)
 	{
 		gm.Update();
-		switch (scene)
-		{
-		
-		case(SceneType::MENU):
-		{
-			//Menu menu = Menu();
-			menu.Update();
-			menu.Draw();
-			break;
-		}
-		case(SceneType::RANKING):
-		{
-			Ranking ranking;
-			ranking.Update();
-			ranking.Draw();
-			break;
-		}
-		case(SceneType::PLAY):
-		{
-			Play play;
-			play.Update();
-			play.Draw();
-			break;
-		}
-		default:
-			scene = SceneType::END;
-			break;
-		}
+		gm.Draw();
 	}
 
 	return 0;

@@ -14,10 +14,10 @@ public:
 	GameManager();
 	~GameManager();
 	
-	bool GetInput(InputType);
-	float GetMouse(MousePosition);
-	void SetInput(bool , InputType );
-	void SetMouse(float, MousePosition);
+	bool GetInput(Inputs::InputType);
+	float GetMouse(Inputs::MousePosition);
+	void SetInput(bool , Inputs::InputType );
+	void SetMouse(float, Inputs::MousePosition);
 	void Update();
 	void Draw();
 private:

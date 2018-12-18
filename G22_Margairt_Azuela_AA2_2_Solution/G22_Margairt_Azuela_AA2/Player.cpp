@@ -16,9 +16,10 @@ Vector2 Player::GetPosition()
 	return PlayerRect.position;
 }
 
-void Player::SetPosition(Vector2 newPos)
+void Player::SetPosition(int newX, int newY)
 {
-	PlayerRect.position = newPos;
+	PlayerRect.position.x = newX;
+	PlayerRect.position.y = newY;
 }
 
 int Player::GetHP()
@@ -43,12 +44,13 @@ void Player::SetPuntuation(int newPunt)
 
 int Player::GetSpeed()
 {
-	return speed;
+	//return speed; 
+	return 0;
 }
 
 void Player::SetSpeed(int newSpeed)
 {
-	speed = newSpeed;
+	//speed = newSpeed;
 }
 
 PlayerState Player::GetState()

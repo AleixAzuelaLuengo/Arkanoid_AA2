@@ -1,9 +1,10 @@
 #pragma once
-enum InputType {LeftArrow, UpArrow, DownArrow, RightArrow, W, A, S, D, SpaceBar, Quit, LeftClick, ENDINPUT};
-enum MousePosition {X, Y, ENDMOUSE};
+
 class Inputs
 {
 public:
+	enum InputType { LeftArrow, UpArrow, DownArrow, RightArrow, W, A, S, D, SpaceBar, Quit, LeftClick, ENDINPUT };
+	enum MousePosition { X, Y, ENDMOUSE };
 	Inputs();
 	~Inputs();
 	bool GetInput(InputType);

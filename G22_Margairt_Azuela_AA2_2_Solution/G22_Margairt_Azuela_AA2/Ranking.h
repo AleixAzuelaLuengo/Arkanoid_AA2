@@ -9,7 +9,7 @@ public:
 	Ranking();
 	~Ranking();
 	void checkIfInRanking(int);
-	void Update();
+	void Update(Inputs &input);
 	void Draw();
 private:
 	std::vector<std::pair<std::string, int>> rankingList;

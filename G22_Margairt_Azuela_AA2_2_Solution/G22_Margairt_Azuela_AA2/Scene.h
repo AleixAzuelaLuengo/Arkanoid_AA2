@@ -1,6 +1,6 @@
 #pragma once
 
-
+#include "Inputs.h"
 
 class Scene
 {
@@ -10,7 +10,7 @@ public:
 	
 	//void SetMusic(Music );
 	//Music GetMusic();
-	virtual void Update() = 0;
+	virtual void Update(Inputs &input) = 0;
 	virtual void Draw() = 0;
 	
 private:

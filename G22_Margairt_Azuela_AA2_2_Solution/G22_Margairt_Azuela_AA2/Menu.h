@@ -13,7 +13,7 @@ private:
 	Rect BG;
 	MyText startGame;
 	MyText ranking;
-	MyText soundSwitch;
-	
+	MyText soundOnSwitch;
+	bool soundOn;
 };
 

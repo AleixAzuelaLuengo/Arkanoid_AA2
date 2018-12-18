@@ -7,7 +7,7 @@ class Menu: public Scene
 public:
 	Menu();
 	~Menu();
-	void Update();
+	void Update(Inputs &input);
 	void Draw();
 private:
 	Rect BG;

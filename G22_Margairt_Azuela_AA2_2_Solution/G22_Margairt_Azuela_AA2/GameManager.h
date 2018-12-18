@@ -18,7 +18,7 @@ public:
 	float GetMouse(MousePosition);
 	void SetInput(bool , InputType );
 	void SetMouse(float, MousePosition);
-	void update();
+	void Update();
 	void Draw();
 private:
 	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;

@@ -36,7 +36,7 @@ void GameManager::SetMouse(float, MousePosition)
 
 
 
-void GameManager::update()
+void GameManager::Update()
 {
 	while (!GetInput(InputType::Quit))
 	{
@@ -71,7 +71,6 @@ void GameManager::update()
 			default:;
 			}
 		}
-
 		switch (gameState)
 		{
 		case stateType::SPLASHSCREEN:
@@ -87,6 +86,7 @@ void GameManager::update()
 			currentScene = new Ranking();
 			break;
 		}
+		currentScene->Update(inputs);
 	}
 }
 

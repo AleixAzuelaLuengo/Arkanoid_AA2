@@ -44,16 +44,16 @@ Menu::~Menu()
 	Renderer::Instance()->Clear();
 }
 
-void Menu::Update()
+void Menu::Update(Inputs &input)
 {
-	/*
-	startGame.idColor = ButtonSelected;
+	
+	/*startGame.idColor = ButtonSelected;
 	ranking.idColor = ButtonSelected;
-	soundOnSwitch.idColor = ButtonSelected;
-
+	soundOnSwitch.idColor = ButtonSelected;*/
+	/*
 	soundOnSwitch.text = "Sound Off";
-	soundOnSwitch.text = "Sound On";
-	*/
+	soundOnSwitch.text = "Sound On";*/
+	
 }
 
 void Menu::Draw()

@@ -1,18 +1,27 @@
 #pragma once
 #include "Scene.h"
 #include "Inputs.h"
+#include "Types.h"
+#include "Menu.h"
+
+
 class GameManager
 {
 public:
 	GameManager();
 	~GameManager();
-	void LoadScene(Scene );
-	Inputs GetInput();
+	
+	bool GetInput(InputType);
+	float GetMouse(MousePosition);
 	void SetInput(bool , InputType );
-	Scene GetScene();
-	void SetScene(Scene );
+	void SetMouse(float, MousePosition);
+	void update();
+	void Draw();
 private:
-	Inputs inputList;
-	Scene scene;
+	enum stateType { SplashScreen, Menu, Play, Ranking, END };
+	Inputs inputs;
+	Scene *currentScene;
+	stateType gameState;
+	SDL_Event event;
 };
 

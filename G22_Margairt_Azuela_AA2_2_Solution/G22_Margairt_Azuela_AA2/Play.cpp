@@ -13,6 +13,7 @@ Play::~Play()
 
 void Play::Update()
 {
+	
 }
 
 void Play::Draw()

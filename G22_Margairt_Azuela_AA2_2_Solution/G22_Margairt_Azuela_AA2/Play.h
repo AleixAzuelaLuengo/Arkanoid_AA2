@@ -3,8 +3,9 @@
 #include "Ball.h"
 #include "Brick.h"
 #include "Button.h"
+#include "Scene.h"
 
-class Play
+class Play: public Scene
 {
 public:
 	Play();
@@ -15,6 +16,8 @@ private:
 	Ball ball;
 	//Brick *brickList[][];
 	Button soundSwitch;
+	SDL_Event event;
+	
 protected:
 	void Update();
 	void Draw();

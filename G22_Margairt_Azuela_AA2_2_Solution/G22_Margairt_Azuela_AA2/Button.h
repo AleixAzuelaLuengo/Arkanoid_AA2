@@ -10,6 +10,6 @@ public:
 	void SetPosition(Vector2 );
 private:
 	Rect buttonRect;
-
+	
 };
 

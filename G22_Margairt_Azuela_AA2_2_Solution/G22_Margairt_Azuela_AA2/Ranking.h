@@ -1,7 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
-class Ranking
+#include "Scene.h"
+
+class Ranking: public Scene
 {
 public:
 	Ranking();

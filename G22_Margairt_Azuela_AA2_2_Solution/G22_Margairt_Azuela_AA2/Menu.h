@@ -1,6 +1,8 @@
 #pragma once
 #include "Button.h"
-class Menu
+#include "Scene.h"
+
+class Menu: public Scene
 {
 public:
 	Menu();
@@ -9,6 +11,7 @@ private:
 	Button startGame;
 	Button ranking;
 	Button soundSwitch;
+	int test;
 protected:
 	void Update();
 	void Draw();

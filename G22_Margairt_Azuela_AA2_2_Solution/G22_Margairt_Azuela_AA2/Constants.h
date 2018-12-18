@@ -5,4 +5,8 @@
 
 #define FPS 60
 
+#define BACKGROUND_MENU "../res/img/Background.jpg"
+#define ABBASDS ""
+
+
 

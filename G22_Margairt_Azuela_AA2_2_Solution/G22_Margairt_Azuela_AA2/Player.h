@@ -7,7 +7,7 @@ public:
 	Player();
 	~Player();
 	Vector2 GetPosition();
-	void SetPosition(Vector2 );
+	void SetPosition(int x, int y );
 	int GetHP();
 	void SetHp(int);
 	int GetPuntuation();
@@ -20,7 +20,6 @@ public:
 private:
 	int HP;
 	int puntuation;
-	int speed;
 	PlayerState state;
 	Rect PlayerRect;
 };

@@ -13,11 +13,12 @@ class GameManager
 public:
 	GameManager();
 	~GameManager();
+	
+	bool GetInput(Inputs::InputType);
+	float GetMouse(Inputs::MousePosition);
+	void SetInput(bool , Inputs::InputType );
+	void SetMouse(float, Inputs::MousePosition);
 	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;
-	bool GetInput(InputType);
-	float GetMouse(MousePosition);
-	void SetInput(bool , InputType );
-	void SetMouse(float, MousePosition);
 	void Update();
 	void Draw();
 private:

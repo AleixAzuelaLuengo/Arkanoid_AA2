@@ -72,23 +72,21 @@ void GameManager::update()
 			}
 		}
 
-		/*switch (gameState)
+		switch (gameState)
 		{
-		case stateType::SplashScreen:
-			currentScene = new SplashScreen;
-			
+		case stateType::SPLASHSCREEN:
+			currentScene = new Splashscreen();	
 			break;
-		case stateType::Menu:
-			currentScene = new Menu;
-			 
+		case stateType::MENU:
+			currentScene = new Menu();			 
 			break;
-		case stateType::Play:
-			currentScene = new Play;
+		case stateType::PLAY:
+			currentScene = new Play();
 			break;
-		case stateType::Ranking:
-			currentScene = new Ranking;
+		case stateType::RANKING:
+			currentScene = new Ranking();
 			break;
-		}*/
+		}
 	}
 }
 

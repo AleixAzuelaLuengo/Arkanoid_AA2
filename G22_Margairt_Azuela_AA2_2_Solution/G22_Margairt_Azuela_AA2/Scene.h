@@ -1,7 +1,7 @@
 #pragma once
 
 
-enum SceneType{SplachScreen, Menu, Play, Ranking, END};
+
 class Scene
 {
 public:
@@ -15,6 +15,7 @@ public:
 	
 private:
 	//Music track;
+	enum SceneType { SPLASHSCREEN, MENU, PLAY, RANKING, END };
 	SceneType actualScene;
 };
 

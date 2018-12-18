@@ -3,6 +3,9 @@
 #include "Inputs.h"
 #include "Types.h"
 #include "Menu.h"
+#include "Play.h"
+#include "Splashscreen.h"
+#include "Ranking.h"
 
 
 class GameManager
@@ -18,10 +21,9 @@ public:
 	void update();
 	void Draw();
 private:
-	enum stateType { SplashScreen, Menu, Play, Ranking, END };
+	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;
 	Inputs inputs;
 	Scene *currentScene;
-	stateType gameState;
 	SDL_Event event;
 };
 

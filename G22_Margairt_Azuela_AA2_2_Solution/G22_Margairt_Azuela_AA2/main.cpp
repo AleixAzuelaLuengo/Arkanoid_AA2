@@ -8,6 +8,7 @@ enum SceneType { MENU, RANKING, PLAY, SPLASHSCREEN, END};
 int main(int, char*[])
 {
 	Renderer::Instance();
+	Menu menu;
 	SceneType scene = SceneType::MENU;
 	while (scene != SceneType::END)
 	{
@@ -16,7 +17,7 @@ int main(int, char*[])
 		
 		case(SceneType::MENU):
 		{
-			Menu menu;
+			//Menu menu = Menu();
 			menu.Update();
 			menu.Draw();
 			break;

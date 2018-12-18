@@ -1,6 +1,8 @@
 #pragma once
 
-const int SCREEN_WIDTH = 800;
-const int SCREEN_HEIGHT = 600;
+#define SCREEN_WIDTH 848
+#define SCREEN_HEIGHT 480
+
+#define FPS 60
 
 

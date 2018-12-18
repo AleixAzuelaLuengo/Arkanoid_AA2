@@ -9,6 +9,8 @@ class Play
 public:
 	Play();
 	~Play();
+	void Update();
+	void Draw();
 private:
 	Player playerLeft;
 	Player playerRight;
@@ -16,8 +18,7 @@ private:
 	//Brick *brickList[][];
 	Button soundSwitch;
 protected:
-	void Update();
-	void Draw();
+	
 
 };
 

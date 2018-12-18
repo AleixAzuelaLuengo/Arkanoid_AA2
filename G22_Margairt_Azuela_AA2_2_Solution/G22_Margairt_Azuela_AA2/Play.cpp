@@ -11,7 +11,7 @@ Play::~Play()
 {
 }
 
-void Play::Update()
+void Play::Update(Inputs &input)
 {
 	
 }

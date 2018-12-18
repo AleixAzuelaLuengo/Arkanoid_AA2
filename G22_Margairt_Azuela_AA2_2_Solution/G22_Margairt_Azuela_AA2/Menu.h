@@ -1,6 +1,7 @@
 #pragma once
 #include "Button.h"
 #include "Scene.h"
+#include "Inputs.h"
 
 class Menu: public Scene
 {

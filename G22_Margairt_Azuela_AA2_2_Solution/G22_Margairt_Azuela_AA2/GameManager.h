@@ -13,7 +13,7 @@ class GameManager
 public:
 	GameManager();
 	~GameManager();
-	
+	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;
 	bool GetInput(InputType);
 	float GetMouse(MousePosition);
 	void SetInput(bool , InputType );
@@ -21,7 +21,7 @@ public:
 	void Update();
 	void Draw();
 private:
-	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;
+	
 	Inputs inputs;
 	Scene *currentScene;
 	SDL_Event event;

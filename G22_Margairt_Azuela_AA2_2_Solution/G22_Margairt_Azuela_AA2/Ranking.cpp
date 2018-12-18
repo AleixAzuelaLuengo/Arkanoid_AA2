@@ -11,7 +11,7 @@ Ranking::~Ranking()
 {
 }
 
-void Ranking::Update()
+void Ranking::Update(Inputs &input)
 {
 }
 

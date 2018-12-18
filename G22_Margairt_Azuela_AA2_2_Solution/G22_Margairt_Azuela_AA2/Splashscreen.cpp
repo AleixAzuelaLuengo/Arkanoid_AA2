@@ -11,7 +11,7 @@ Splashscreen::~Splashscreen()
 {
 }
 
-void Splashscreen::Update()
+void Splashscreen::Update(Inputs &input)
 {
 }
 

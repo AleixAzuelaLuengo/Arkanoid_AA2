@@ -78,15 +78,19 @@ void GameManager::update()
 			currentScene = new Splashscreen();	
 			break;
 		case stateType::MENU:
+			delete currentScene;
 			currentScene = new Menu();			 
 			break;
 		case stateType::PLAY:
+			delete currentScene;
 			currentScene = new Play();
 			break;
 		case stateType::RANKING:
+			delete currentScene;
 			currentScene = new Ranking();
 			break;
 		}
+
 	}
 }
 

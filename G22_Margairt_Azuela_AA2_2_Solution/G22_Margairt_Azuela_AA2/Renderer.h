@@ -34,10 +34,11 @@ public:
 	 void LoadTexture(const std::string &id, const std::string &path);
 	 void LoadTextureText(const std::string &fontId, MyText text);
 	 Vector2 GetTextureSize(const std::string &id);
-	 void PushImage(const std::string &id,const SDL_Rect &rect);
-	 void PushSprite(const std::string &id,const SDL_Rect &rectSprite,const SDL_Rect &rectPos);
-	 void PushRotatedSprite(const std::string &id, const SDL_Rect &rectSprite, const SDL_Rect &rectPos, float angle);
+	 void PushImage(const std::string &id,const Rect &rect);
+	 void PushSprite(const std::string &id,const Rect &rectSprite,const Rect &rectPos);
+	 void PushRotatedSprite(const std::string &id, const Rect &rectSprite, const Rect &rectPos, float angle);
 	 void SetRendreDrawColor(int r, int g, int b);	 
+	 SDL_Rect ConvertFromRectToSDL_Rect(Rect rect);
 };
 
 

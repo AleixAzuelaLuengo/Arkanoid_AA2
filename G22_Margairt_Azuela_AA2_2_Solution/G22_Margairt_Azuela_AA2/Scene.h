@@ -7,6 +7,7 @@ class Scene
 public:
 	Scene();
 	~Scene();
+	
 	//void SetMusic(Music );
 	//Music GetMusic();
 	virtual void Update() = 0;

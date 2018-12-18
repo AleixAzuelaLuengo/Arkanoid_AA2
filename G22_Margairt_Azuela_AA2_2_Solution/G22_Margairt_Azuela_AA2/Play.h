@@ -10,6 +10,8 @@ class Play: public Scene
 public:
 	Play();
 	~Play();
+	void Update();
+	void Draw();
 private:
 	Player playerLeft;
 	Player playerRight;
@@ -19,8 +21,7 @@ private:
 	SDL_Event event;
 	
 protected:
-	void Update();
-	void Draw();
+	
 
 };
 

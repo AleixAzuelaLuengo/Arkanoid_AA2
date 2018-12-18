@@ -7,13 +7,13 @@ class Menu: public Scene
 public:
 	Menu();
 	~Menu();
-private:
-	Button startGame;
-	Button ranking;
-	Button soundSwitch;
-	int test;
-protected:
 	void Update();
 	void Draw();
+private:
+	Rect BG;
+	MyText startGame;
+	MyText ranking;
+	MyText soundSwitch;
+	
 };
 

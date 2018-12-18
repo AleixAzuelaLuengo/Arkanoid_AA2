@@ -1,17 +1,22 @@
 #pragma once
 #include <string>
-#include "../../../dep/inc/SDL/SDL.h"
-#include "../../../dep/inc/SDL/SDL_image.h"
-#include "../../../dep/inc/SDL/SDL_ttf.h"
+#include <SDL_types.h>
+#include <SDL.h>
+#include <SDL_image.h>
+#include <SDL_ttf.h>
 
 struct MyColor
 {
 	Uint8 r, g, b, a;
+	MyColor();
+	MyColor(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha);
 };
 
 struct Vector2
 {
 	int x, y;
+	Vector2();
+	Vector2(int newX, int newY);
 };
 
 struct Font
@@ -20,16 +25,26 @@ struct Font
 	int size;
 };
 
-struct MyText
+struct Rect
 {
-	std::string id, text;
-	MyColor idColor;
+	Vector2 position, proportions;
+	Rect();
+	Rect(int x, int y, int w, int h);
 };
 
-struct Rect
-{	
-	Vector2 position, proportions;
+struct MyText
+{
+	std::string text;
+	MyColor idColor;
+	Font font;
+	Rect rect;
+
+
 };
+
+
+
+
 
 
 

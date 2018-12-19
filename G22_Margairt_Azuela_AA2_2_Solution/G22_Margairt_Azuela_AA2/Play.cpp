@@ -15,19 +15,19 @@ void Play::Update(Inputs &input)
 {
 	if (input.GetInput(input.W))
 	{
-		//playerLeft.SetPosition((playerLeft.GetPosition().x),)
+		playerLeft.SetPosition((playerLeft.GetPosition().x)  , (playerLeft.GetPosition().y + 1));
 	}
 	else if (input.GetInput(input.S))
 	{
-
+		playerLeft.SetPosition((playerLeft.GetPosition().x), (playerLeft.GetPosition().y - 1));
 	}
 	if (input.GetInput(input.UpArrow))
 	{
-
+		playerRight.SetPosition((playerRight.GetPosition().x), (playerRight.GetPosition().y + 1));
 	}
 	else if (input.GetInput(input.DownArrow))
 	{
-
+		playerRight.SetPosition((playerRight.GetPosition().x), (playerRight.GetPosition().y - 1));
 	}
 }
 

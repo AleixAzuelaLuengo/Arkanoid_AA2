@@ -29,16 +29,17 @@ void GameManager::SetInput(bool i, Inputs::InputType x)
 	inputs.SetInput(x, i);
 }
 
-void GameManager::SetMouse(float, Inputs::MousePosition)
+void GameManager::SetMouse(float i, Inputs::MousePosition mouse)
 {
-	
+	inputs.SetMouse(mouse, i);
+	inputs.SetMouse(mouse, i);
 }
 
 
 
 void GameManager::Update()
 {
-	while (SDL_PollEvent(&event)) {
+	if (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_QUIT:
 				SetInput(true, Inputs::InputType::Quit);

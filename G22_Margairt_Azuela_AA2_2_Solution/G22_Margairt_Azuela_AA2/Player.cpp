@@ -18,6 +18,11 @@ Vector2 Player::GetPosition()
 	return PlayerRect.position;
 }
 
+Rect Player::GetFlipedRect()
+{
+	return Rect{ PlayerRect.position.x, PlayerRect.position.y, PlayerRect.proportions.y, PlayerRect.proportions.x };
+}
+
 void Player::SetPosition(int newX, int newY)
 {
 	PlayerRect.position.x = newX;
@@ -53,6 +58,16 @@ int Player::GetSpeed()
 void Player::SetSpeed(int newSpeed)
 {
 	//speed = newSpeed;
+}
+
+void Player::MoveUp()
+{
+	PlayerRect.position.y -= 5;
+}
+
+void Player::MoveDown()
+{
+	PlayerRect.position.y += 5;
 }
 
 PlayerState Player::GetState()

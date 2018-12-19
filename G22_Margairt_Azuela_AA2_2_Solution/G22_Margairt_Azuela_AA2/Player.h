@@ -7,6 +7,7 @@ public:
 	Player();
 	~Player();
 	Vector2 GetPosition();
+	Rect GetFlipedRect();
 	void SetPosition(int x, int y );
 	int GetHP();
 	void SetHp(int);
@@ -14,6 +15,8 @@ public:
 	void SetPuntuation(int);
 	int GetSpeed();
 	void SetSpeed(int);
+	void MoveUp();
+	void MoveDown();
 	PlayerState GetState();
 	void SetState(PlayerState);
 	Rect GetRect();

@@ -15,6 +15,7 @@ private:
 	MyText startGame;
 	MyText ranking;
 	MyText soundOnSwitch;
+	MyText exit;
 	bool soundOn;
 };
 

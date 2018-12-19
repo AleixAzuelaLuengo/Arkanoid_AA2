@@ -37,6 +37,7 @@ public:
 	 void PushImage(const std::string &id,const Rect &rect);
 	 void PushSprite(const std::string &id,const Rect &rectSprite,const Rect &rectPos);
 	 void PushRotatedSprite(const std::string &id, const Rect &rectSprite, const Rect &rectPos, float angle);
+	 void PushRotatedImage(const std::string &id, const Rect &rect, float angle);
 	 void SetRendreDrawColor(int r, int g, int b);	 
 	 SDL_Rect ConvertFromRectToSDL_Rect(Rect rect);
 };

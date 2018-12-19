@@ -24,21 +24,26 @@ Play::~Play()
 
 void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
+	if (input.GetInput(Inputs::InputType::Quit))
+	{
+		sceneStatus = sceneState::EXIT;
+		gameState = stateType::MENU;
+	}
 	if (input.GetInput(input.W))
 	{
-		playerLeft.SetPosition((playerLeft.GetPosition().x)  , (playerLeft.GetPosition().y + 1));
+		playerLeft.MoveUp();
 	}
 	else if (input.GetInput(input.S))
 	{
-		playerLeft.SetPosition((playerLeft.GetPosition().x), (playerLeft.GetPosition().y - 1));
+		playerLeft.MoveDown();
 	}
 	if (input.GetInput(input.UpArrow))
 	{
-		playerRight.SetPosition((playerRight.GetPosition().x), (playerRight.GetPosition().y + 1));
+		playerRight.MoveUp();
 	}
 	else if (input.GetInput(input.DownArrow))
 	{
-		playerRight.SetPosition((playerRight.GetPosition().x), (playerRight.GetPosition().y - 1));
+		playerRight.MoveDown();
 	}
 }
 
@@ -46,7 +51,8 @@ void Play::Draw()
 {
 	Renderer::Instance()->Render();
 	Renderer::Instance()->PushImage("BG_MENU", BG);
-	Renderer::Instance()->PushImage("PLAYER", playerLeft.GetRect());
-	Renderer::Instance()->PushImage("PLAYER", playerRight.GetRect());
+	Renderer::Instance()->PushRotatedImage("PLAYER", playerLeft.GetFlipedRect(), 90);
+	Renderer::Instance()->PushRotatedImage("PLAYER", playerRight.GetFlipedRect(), 90);
 	Renderer::Instance()->PushImage("BALL", ball.GetRect());
+	
 }

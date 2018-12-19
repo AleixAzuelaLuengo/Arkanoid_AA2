@@ -46,45 +46,54 @@ Menu::~Menu()
 	Renderer::Instance()->Clear();
 }
 
-void Menu::Update(Inputs &input)
+void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
+	
 	if (MovingObject::Instance()->MouseCollision(startGame.rect, input))
 	{
 		startGame.idColor = ButtonSelected;
-		Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
+		if (input.GetInput(Inputs::LeftClick))
+		{
+			sceneStatus = sceneState::EXIT;
+			gameState = stateType::PLAY;
+		}
 	}
 	else
 	{
-		std::cout << input.GetMousePos(input.X) << ',' << input.GetMousePos(input.Y) << std::endl;
 		startGame.idColor = ButtonNotSelected;
-		Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
 	}
 
 	if (MovingObject::Instance()->MouseCollision(ranking.rect, input))
 	{
 		ranking.idColor = ButtonSelected;
-		Renderer::Instance()->LoadTextureText(ranking.font.id, ranking);
+		if (input.GetInput(Inputs::LeftClick))
+		{
+			sceneStatus = sceneState::EXIT;
+			gameState = stateType::RANKING;
+		}
 	}
 	else
 	{
 		ranking.idColor = ButtonNotSelected;
-		Renderer::Instance()->LoadTextureText(ranking.font.id, ranking);
 	}
 
 	if (MovingObject::Instance()->MouseCollision(soundOnSwitch.rect, input))
 	{
 		soundOnSwitch.idColor = ButtonSelected;
-		Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
+
+		if (soundOnSwitch.text == "Sound On" && input.GetInput(Inputs::LeftClick))
+			soundOnSwitch.text = "Sound Off";
+		else if (soundOnSwitch.text == "Sound Off" && input.GetInput(Inputs::LeftClick))
+			soundOnSwitch.text = "Sound On";
 	}
 	else
 	{
-		startGame.idColor = ButtonNotSelected;
-		Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
+		soundOnSwitch.idColor = ButtonNotSelected;
 	}
 
-	
-	soundOnSwitch.text = "Sound Off";
-	
+	Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
+	Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
+	Renderer::Instance()->LoadTextureText(ranking.font.id, ranking);
 }
 
 void Menu::Draw()

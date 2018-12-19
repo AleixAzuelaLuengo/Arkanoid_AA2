@@ -8,7 +8,7 @@ class Menu: public Scene
 public:
 	Menu();
 	~Menu();
-	void Update(Inputs &input);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
 	void Draw();
 private:
 	Rect BG;

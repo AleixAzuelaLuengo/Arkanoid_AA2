@@ -1,6 +1,8 @@
 #include "Menu.h"
 #include "Renderer.h"
+#include "MovingObject.h"
 #include "Constants.h"
+#include <iostream>
 Menu::Menu()
 {	
 	BG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
@@ -46,13 +48,42 @@ Menu::~Menu()
 
 void Menu::Update(Inputs &input)
 {
+	if (MovingObject::Instance()->MouseCollision(startGame.rect, input))
+	{
+		startGame.idColor = ButtonSelected;
+		Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
+	}
+	else
+	{
+		std::cout << input.GetMousePos(input.X) << ',' << input.GetMousePos(input.Y) << std::endl;
+		startGame.idColor = ButtonNotSelected;
+		Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
+	}
+
+	if (MovingObject::Instance()->MouseCollision(ranking.rect, input))
+	{
+		ranking.idColor = ButtonSelected;
+		Renderer::Instance()->LoadTextureText(ranking.font.id, ranking);
+	}
+	else
+	{
+		ranking.idColor = ButtonNotSelected;
+		Renderer::Instance()->LoadTextureText(ranking.font.id, ranking);
+	}
+
+	if (MovingObject::Instance()->MouseCollision(soundOnSwitch.rect, input))
+	{
+		soundOnSwitch.idColor = ButtonSelected;
+		Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
+	}
+	else
+	{
+		startGame.idColor = ButtonNotSelected;
+		Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
+	}
+
 	
-	/*startGame.idColor = ButtonSelected;
-	ranking.idColor = ButtonSelected;
-	soundOnSwitch.idColor = ButtonSelected;*/
-	/*
 	soundOnSwitch.text = "Sound Off";
-	soundOnSwitch.text = "Sound On";*/
 	
 }
 

@@ -15,6 +15,6 @@ public:
 
 private:
 	bool inputList[InputType::ENDINPUT];
-	bool mousePos[MousePosition::ENDMOUSE];
+	float mousePos[MousePosition::ENDMOUSE];
 };
 

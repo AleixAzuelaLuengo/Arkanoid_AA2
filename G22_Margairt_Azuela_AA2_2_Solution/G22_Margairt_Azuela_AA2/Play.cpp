@@ -11,7 +11,7 @@ Play::~Play()
 {
 }
 
-void Play::Update(Inputs &input)
+void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
 	if (input.GetInput(input.W))
 	{

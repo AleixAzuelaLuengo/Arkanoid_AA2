@@ -10,7 +10,7 @@ class Play: public Scene
 public:
 	Play();
 	~Play();
-	void Update(Inputs &input);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
 	void Draw();
 private:
 	Player playerLeft;

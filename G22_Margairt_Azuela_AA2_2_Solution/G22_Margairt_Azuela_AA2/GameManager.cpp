@@ -1,10 +1,11 @@
 #include "GameManager.h"
-
+#include <iostream>
 
 
 
 GameManager::GameManager()
 {
+	currentScene = new Menu();
 }
 
 
@@ -39,29 +40,79 @@ void GameManager::SetMouse(float i, Inputs::MousePosition mouse)
 
 void GameManager::Update()
 {
+
 	if (SDL_PollEvent(&event)) {
 			switch (event.type) {
 			case SDL_QUIT:
 				SetInput(true, Inputs::InputType::Quit);
 				break;
 			case SDL_KEYUP:
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					SetInput(false, Inputs::InputType::Quit);
+					break;
+				case SDLK_w:
+					SetInput(false, Inputs::InputType::W);
+					break;
+				case SDLK_s:
+					SetInput(false, Inputs::InputType::S);
+					break; 
+				case SDLK_UP:
+					SetInput(false, Inputs::InputType::UpArrow);
+					break;
+				case SDLK_DOWN:
+					SetInput(false, Inputs::InputType::DownArrow);
+					break;
+				case SDLK_SPACE:
+					SetInput(false, Inputs::InputType::SpaceBar);
+					break;
+				default:
+					break;
+				}	
+				break;
 			case SDL_KEYDOWN:
-				SetInput(event.key.keysym.sym == SDLK_ESCAPE, Inputs::InputType::Quit);
-
-				SetInput(event.key.keysym.sym == SDLK_w, Inputs::InputType::W);
-				SetInput(event.key.keysym.sym == SDLK_s, Inputs::InputType::S);
-				SetInput(event.key.keysym.sym == SDLK_a, Inputs::InputType::A);
-				SetInput(event.key.keysym.sym == SDLK_d, Inputs::InputType::D);
-
-				SetInput(event.key.keysym.sym == SDLK_UP, Inputs::InputType::UpArrow);
-				SetInput(event.key.keysym.sym == SDLK_DOWN, Inputs::InputType::DownArrow);
-				SetInput(event.key.keysym.sym == SDLK_RIGHT, Inputs::InputType::RightArrow);
-				SetInput(event.key.keysym.sym == SDLK_LEFT, Inputs::InputType::LeftArrow);
-
-				SetInput(event.key.keysym.sym == SDLK_SPACE, Inputs::InputType::SpaceBar);
+				switch (event.key.keysym.sym)
+				{
+				case SDLK_ESCAPE:
+					SetInput(true, Inputs::InputType::Quit);
+					break;
+				case SDLK_w:
+					SetInput(true, Inputs::InputType::W);
+					break;
+				case SDLK_s:
+					SetInput(true, Inputs::InputType::S);
+					break;
+				case SDLK_UP:
+					SetInput(true, Inputs::InputType::UpArrow);
+					break;
+				case SDLK_DOWN:
+					SetInput(true, Inputs::InputType::DownArrow);
+					break;
+				case SDLK_SPACE:
+					SetInput(true, Inputs::InputType::SpaceBar);
+					break;
+				default:
+					break;
+				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
-				SetInput(event.button.button == SDL_BUTTON_LEFT, Inputs::InputType::LeftClick);
+				switch (event.button.button)
+				{
+				case SDL_BUTTON_LEFT:
+					SetInput(true, Inputs::InputType::LeftClick);
+				default:
+					break;
+				}
+				break;
+			case SDL_MOUSEBUTTONUP:
+				switch (event.button.button)
+				{
+				case SDL_BUTTON_LEFT:
+					SetInput(false, Inputs::InputType::LeftClick);
+				default:
+					break;
+				}
 				break;
 			case SDL_MOUSEMOTION:
 				SetMouse(event.motion.x, Inputs::MousePosition::X);
@@ -69,26 +120,34 @@ void GameManager::Update()
 				break;
 			default:;
 			}
-
-			switch (gameState)
+			std::cout << currentScene->sceneStatus << std::endl;
+			std::cout << currentScene->gameState << std::endl;
+			if (currentScene->sceneStatus == currentScene->sceneState::EXIT)
 			{
-			case stateType::SPLASHSCREEN:
-				currentScene = new Splashscreen();
-				break;
-			case stateType::MENU:
-				delete currentScene;
-				currentScene = new Menu();
-				break;
-			case stateType::PLAY:
-				delete currentScene;
-				currentScene = new Play();
-				break;
-			case stateType::RANKING:
-				delete currentScene;
-				currentScene = new Ranking();
-				break;
+				switch (currentScene->gameState)
+				{
+				case Scene::stateType::SPLASHSCREEN:
+					currentScene = new Splashscreen();
+					break;
+				case Scene::stateType::MENU:
+					delete currentScene;
+					currentScene = new Menu();
+					break;
+				case Scene::stateType::PLAY:
+					delete currentScene;
+					currentScene = new Play();
+					break;
+				case Scene::stateType::RANKING:
+					delete currentScene;
+					currentScene = new Ranking();
+					break;
+				default:
+					SetInput(true, Inputs::InputType::Quit);
+					break;
+				}
+				currentScene->sceneStatus = currentScene->sceneState::RUNNING;
 			}
-			currentScene->Update(inputs);
+			currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 	}		
 }
 

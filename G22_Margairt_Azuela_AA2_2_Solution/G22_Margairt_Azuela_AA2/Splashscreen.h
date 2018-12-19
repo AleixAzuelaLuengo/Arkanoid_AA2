@@ -6,7 +6,7 @@ class Splashscreen: public Scene
 public:
 	Splashscreen();
 	~Splashscreen();
-	void Update(Inputs &input);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
 	void Draw();
 
 private:

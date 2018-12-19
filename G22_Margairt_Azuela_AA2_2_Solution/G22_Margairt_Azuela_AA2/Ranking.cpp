@@ -11,7 +11,7 @@ Ranking::~Ranking()
 {
 }
 
-void Ranking::Update(Inputs &input)
+void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
 }
 

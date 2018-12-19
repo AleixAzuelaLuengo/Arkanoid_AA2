@@ -11,7 +11,7 @@ Splashscreen::~Splashscreen()
 {
 }
 
-void Splashscreen::Update(Inputs &input)
+void Splashscreen::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
 }
 

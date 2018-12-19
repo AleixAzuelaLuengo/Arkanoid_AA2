@@ -13,6 +13,7 @@ public:
 	void Update(Inputs &input);
 	void Draw();
 private:
+	Rect BG;
 	Player playerLeft;
 	Player playerRight;
 	Ball ball;

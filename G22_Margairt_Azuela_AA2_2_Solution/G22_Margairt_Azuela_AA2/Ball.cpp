@@ -1,9 +1,10 @@
 #include "Ball.h"
-
+#include "Constants.h"
 
 
 Ball::Ball()
 {
+	ballRect.proportions = { BALL_WIDTH, BALL_HEIGHT };
 }
 
 
@@ -16,9 +17,9 @@ void Ball::SetSpeed(Vector2 newSpeed)
 	speed = newSpeed;
 }
 
-void Ball::SetPosition(Vector2 newPos)
+void Ball::SetPosition(int x, int y)
 {
-	ballRect.position = (newPos);
+	ballRect.position = { x , y };
 }
 
 Vector2 Ball::GetSpeed()
@@ -29,6 +30,11 @@ Vector2 Ball::GetSpeed()
 Vector2 Ball::GetBallPos()
 {
 	return ballRect.position;
+}
+
+Rect Ball::GetRect()
+{
+	return ballRect;
 }
 
 

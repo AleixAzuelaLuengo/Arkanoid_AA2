@@ -1,9 +1,11 @@
 #include "Player.h"
+#include "Constants.h"
 
 
 
 Player::Player()
 {
+	PlayerRect.proportions = { PLAYER_WIDTH, PLAYER_HEIGHT };
 }
 
 
@@ -61,4 +63,10 @@ PlayerState Player::GetState()
 void Player::SetState(PlayerState newState)
 {
 	state = newState;
+}
+
+Rect Player::GetRect()
+{
+	
+	return PlayerRect;
 }

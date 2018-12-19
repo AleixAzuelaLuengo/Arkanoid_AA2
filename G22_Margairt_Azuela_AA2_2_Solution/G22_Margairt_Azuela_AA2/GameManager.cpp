@@ -89,7 +89,8 @@ void GameManager::Update()
 				break;
 			}
 			currentScene->Update(inputs);
-	}		
+	}
+
 }
 
 void GameManager::Draw()

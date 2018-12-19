@@ -16,7 +16,7 @@ public:
 	void SetSpeed(int);
 	PlayerState GetState();
 	void SetState(PlayerState);
-
+	Rect GetRect();
 private:
 	int HP;
 	int puntuation;

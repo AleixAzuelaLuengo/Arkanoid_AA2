@@ -1,9 +1,20 @@
 #include "Play.h"
+#include "Constants.h"
+#include "Renderer.h"
+#include "MovingObject.h"
 
 
 
 Play::Play()
 {
+	BG = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+	playerLeft.SetPosition(SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
+	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 3, SCREEN_HEIGHT / 2);
+	ball.SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+
+	Renderer::Instance()->LoadTexture("BG_MENU", BACKGROUND_MENU);
+	Renderer::Instance()->LoadTexture("PLAYER", PLAYER_SPRITE);
+	Renderer::Instance()->LoadTexture("BALL", BALL_SPRITE);
 }
 
 
@@ -33,4 +44,9 @@ void Play::Update(Inputs &input)
 
 void Play::Draw()
 {
+	Renderer::Instance()->Render();
+	Renderer::Instance()->PushImage("BG_MENU", BG);
+	Renderer::Instance()->PushImage("PLAYER", playerLeft.GetRect());
+	Renderer::Instance()->PushImage("PLAYER", playerRight.GetRect());
+	Renderer::Instance()->PushImage("BALL", ball.GetRect());
 }

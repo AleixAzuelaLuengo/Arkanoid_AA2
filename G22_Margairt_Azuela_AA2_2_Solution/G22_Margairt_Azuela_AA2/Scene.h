@@ -10,7 +10,7 @@ public:
 	
 	//void SetMusic(Music );
 	//Music GetMusic();
-	enum sceneState { RUNNING, EXIT }sceneStatus = sceneState::EXIT;
+	enum sceneState { RUNNING, PAUSED, EXIT }sceneStatus = sceneState::EXIT;
 	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;
 	
 	virtual void Update(Inputs &input,sceneState &sceneStatus, stateType &gameState) = 0;

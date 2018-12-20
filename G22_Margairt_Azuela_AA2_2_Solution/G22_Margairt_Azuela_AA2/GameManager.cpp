@@ -58,6 +58,8 @@ void GameManager::Update()
 					SetInput(false, Inputs::InputType::DownArrow);
 				if (event.key.keysym.sym == SDLK_SPACE)
 					SetInput(false, Inputs::InputType::SpaceBar);
+				if (event.key.keysym.sym == SDLK_p)
+					SetInput(false, Inputs::InputType::P);
 				break;
 			case SDL_KEYDOWN:
 				if (event.key.keysym.sym == SDLK_ESCAPE)
@@ -72,6 +74,8 @@ void GameManager::Update()
 					SetInput(true, Inputs::InputType::DownArrow);
 				if (event.key.keysym.sym == SDLK_SPACE)
 					SetInput(true, Inputs::InputType::SpaceBar);
+				if (event.key.keysym.sym == SDLK_p)
+					SetInput(true, Inputs::InputType::P);
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				switch (event.button.button)
@@ -125,8 +129,8 @@ void GameManager::Update()
 				}
 				currentScene->sceneStatus = currentScene->sceneState::RUNNING;
 			}
-			currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
-	}		
+	}	
+	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 }
 
 void GameManager::Draw()

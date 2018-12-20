@@ -11,9 +11,8 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+
 }
-
-
 
 bool GameManager::GetInput(Inputs::InputType i)
 {
@@ -47,55 +46,33 @@ void GameManager::Update()
 			case SDL_QUIT:
 				SetInput(true, Inputs::InputType::Quit);
 				break;
-			case SDL_KEYUP:
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
+			case SDL_KEYUP: 
+				if (event.key.keysym.sym == SDLK_ESCAPE) 
 					SetInput(false, Inputs::InputType::Quit);
-					break;
-				case SDLK_w:
+				if (event.key.keysym.sym == SDLK_w) 
 					SetInput(false, Inputs::InputType::W);
-					break;
-				case SDLK_s:
+				if (event.key.keysym.sym == SDLK_s)
 					SetInput(false, Inputs::InputType::S);
-					break; 
-				case SDLK_UP:
+				if (event.key.keysym.sym == SDLK_UP)
 					SetInput(false, Inputs::InputType::UpArrow);
-					break;
-				case SDLK_DOWN:
+				if (event.key.keysym.sym == SDLK_DOWN)
 					SetInput(false, Inputs::InputType::DownArrow);
-					break;
-				case SDLK_SPACE:
+				if (event.key.keysym.sym == SDLK_SPACE)
 					SetInput(false, Inputs::InputType::SpaceBar);
-					break;
-				default:
-					break;
-				}	
 				break;
 			case SDL_KEYDOWN:
-				switch (event.key.keysym.sym)
-				{
-				case SDLK_ESCAPE:
+				if (event.key.keysym.sym == SDLK_ESCAPE)
 					SetInput(true, Inputs::InputType::Quit);
-					break;
-				case SDLK_w:
+				if (event.key.keysym.sym == SDLK_w)
 					SetInput(true, Inputs::InputType::W);
-					break;
-				case SDLK_s:
+				if (event.key.keysym.sym == SDLK_s)
 					SetInput(true, Inputs::InputType::S);
-					break;
-				case SDLK_UP:
+				if (event.key.keysym.sym == SDLK_UP)
 					SetInput(true, Inputs::InputType::UpArrow);
-					break;
-				case SDLK_DOWN:
+				if (event.key.keysym.sym == SDLK_DOWN)
 					SetInput(true, Inputs::InputType::DownArrow);
-					break;
-				case SDLK_SPACE:
+				if (event.key.keysym.sym == SDLK_SPACE)
 					SetInput(true, Inputs::InputType::SpaceBar);
-					break;
-				default:
-					break;
-				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				switch (event.button.button)
@@ -119,10 +96,10 @@ void GameManager::Update()
 				SetMouse(event.motion.x, Inputs::MousePosition::X);
 				SetMouse(event.motion.y, Inputs::MousePosition::Y);
 				break;
-			default:;
+			default:
+				break;
 			}
-			std::cout << currentScene->sceneStatus << std::endl;
-			std::cout << currentScene->gameState << std::endl;
+			
 			if (currentScene->sceneStatus == currentScene->sceneState::EXIT)
 			{
 				switch (currentScene->gameState)
@@ -143,7 +120,8 @@ void GameManager::Update()
 					currentScene = new Ranking();
 					break;
 				default:
-					SetInput(true, Inputs::InputType::Quit);
+					delete currentScene;
+					exit(0);
 					break;
 				}
 				currentScene->sceneStatus = currentScene->sceneState::RUNNING;

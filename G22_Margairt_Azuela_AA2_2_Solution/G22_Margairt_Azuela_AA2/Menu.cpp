@@ -8,7 +8,7 @@ Menu::Menu()
 	BG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
 
 	startGame.text = "Play";
-	startGame.font.size = 8;
+	startGame.font.size = 80;
 	startGame.idColor = ButtonNotSelected;
 	startGame.font.path = MENU_FONT;
 	startGame.font.id = "PLAY_FONT";
@@ -16,7 +16,7 @@ Menu::Menu()
 	startGame.rect.position.x = (SCREEN_WIDTH / 2) - (startGame.rect.proportions.x / 2);
 
 	ranking.text = "Ranking";
-	ranking.font.size = 8;
+	ranking.font.size = 80;
 	ranking.font.path = MENU_FONT;
 	ranking.font.id = "RANKING_FONT";
 	ranking.idColor = ButtonNotSelected;
@@ -24,7 +24,7 @@ Menu::Menu()
 	ranking.rect.position.x = (SCREEN_WIDTH / 2) - (ranking.rect.proportions.x / 2);
 
 	soundOnSwitch.text = "Sound On";
-	soundOnSwitch.font.size = 8;
+	soundOnSwitch.font.size = 80;
 	soundOnSwitch.font.path = MENU_FONT;
 	soundOnSwitch.font.id = "SoundON_FONT";
 	soundOnSwitch.idColor = ButtonNotSelected;
@@ -32,7 +32,7 @@ Menu::Menu()
 	soundOnSwitch.rect.position.x = (SCREEN_WIDTH / 2) - (soundOnSwitch.rect.proportions.x / 2);
 
 	exit.text = "Exit";
-	exit.font.size = 8;
+	exit.font.size = 80;
 	exit.font.path = MENU_FONT;
 	exit.font.id = "Exit_FONT";
 	exit.idColor = ButtonNotSelected;

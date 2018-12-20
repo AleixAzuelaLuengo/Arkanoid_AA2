@@ -10,7 +10,7 @@ Play::Play()
 	PauseBG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
 		
 	pause.text = "PAUSE";
-	pause.font.size = 8;
+	pause.font.size = 80;
 	pause.idColor = ButtonNotSelected;
 	pause.font.path = MENU_FONT;
 	pause.font.id = "PAUSE_FONT";
@@ -18,7 +18,7 @@ Play::Play()
 	pause.rect.position.x = (SCREEN_WIDTH / 2) - (pause.rect.proportions.x / 2);
 
 	soundOnSwitch.text = "Sound On";
-	soundOnSwitch.font.size = 8;
+	soundOnSwitch.font.size = 80;
 	soundOnSwitch.font.path = MENU_FONT;
 	soundOnSwitch.font.id = "SoundON_FONT";
 	soundOnSwitch.idColor = ButtonNotSelected;

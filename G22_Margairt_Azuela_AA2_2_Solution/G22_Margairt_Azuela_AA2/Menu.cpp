@@ -62,6 +62,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 	{
 		sceneStatus = sceneState::EXIT;
 		gameState = stateType::END;
+		input.SetInput(Inputs::InputType::Quit, false);
 	}
 	if (MovingObject::Instance()->MouseCollision(startGame.rect, input))
 	{
@@ -96,9 +97,16 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		soundOnSwitch.idColor = ButtonSelected;
 
 		if (soundOnSwitch.text == "Sound On" && input.GetInput(Inputs::LeftClick))
+		{
 			soundOnSwitch.text = "Sound Off";
+			input.SetInput(Inputs::InputType::LeftClick, false);
+		}
 		else if (soundOnSwitch.text == "Sound Off" && input.GetInput(Inputs::LeftClick))
+		{
 			soundOnSwitch.text = "Sound On";
+			input.SetInput(Inputs::InputType::LeftClick, false);
+		}
+			
 	}
 	else
 	{

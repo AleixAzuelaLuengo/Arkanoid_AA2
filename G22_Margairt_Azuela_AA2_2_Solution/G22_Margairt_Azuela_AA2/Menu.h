@@ -1,5 +1,5 @@
 #pragma once
-#include "Button.h"
+#include "Types.h"
 #include "Scene.h"
 
 class Menu: public Scene

@@ -47,36 +47,60 @@ void GameManager::Update()
 				SetInput(true, Inputs::InputType::Quit);
 				break;
 			case SDL_KEYUP: 
-				if (event.key.keysym.sym == SDLK_ESCAPE) 
+				switch (event.key.keysym.sym)
+				{
+				case(SDLK_ESCAPE):
 					SetInput(false, Inputs::InputType::Quit);
-				if (event.key.keysym.sym == SDLK_w) 
+					break;
+				case(SDLK_w):
 					SetInput(false, Inputs::InputType::W);
-				if (event.key.keysym.sym == SDLK_s)
+					break;
+				case(SDLK_s):
 					SetInput(false, Inputs::InputType::S);
-				if (event.key.keysym.sym == SDLK_UP)
+					break;
+				case(SDLK_UP):
 					SetInput(false, Inputs::InputType::UpArrow);
-				if (event.key.keysym.sym == SDLK_DOWN)
+					break;
+				case(SDLK_DOWN):
 					SetInput(false, Inputs::InputType::DownArrow);
-				if (event.key.keysym.sym == SDLK_SPACE)
+					break;
+				case(SDLK_SPACE):
 					SetInput(false, Inputs::InputType::SpaceBar);
-				if (event.key.keysym.sym == SDLK_p)
+					break;
+				case(SDLK_p):
 					SetInput(false, Inputs::InputType::P);
-				break;
+					break;
+				default:
+					break;
+				}
+					break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE)
+				switch (event.key.keysym.sym)
+				{
+				case(SDLK_ESCAPE):
 					SetInput(true, Inputs::InputType::Quit);
-				if (event.key.keysym.sym == SDLK_w)
+					break;
+				case(SDLK_w):
 					SetInput(true, Inputs::InputType::W);
-				if (event.key.keysym.sym == SDLK_s)
+					break;
+				case(SDLK_s):
 					SetInput(true, Inputs::InputType::S);
-				if (event.key.keysym.sym == SDLK_UP)
+					break;
+				case(SDLK_UP):
 					SetInput(true, Inputs::InputType::UpArrow);
-				if (event.key.keysym.sym == SDLK_DOWN)
+					break;
+				case(SDLK_DOWN):
 					SetInput(true, Inputs::InputType::DownArrow);
-				if (event.key.keysym.sym == SDLK_SPACE)
+					break;
+				case(SDLK_SPACE):
 					SetInput(true, Inputs::InputType::SpaceBar);
-				if (event.key.keysym.sym == SDLK_p)
+					break;
+				case(SDLK_p):
 					SetInput(true, Inputs::InputType::P);
+					break;
+				default:
+					break;
+				}
 				break;
 			case SDL_MOUSEBUTTONDOWN:
 				switch (event.button.button)
@@ -103,35 +127,35 @@ void GameManager::Update()
 			default:
 				break;
 			}
-			
-			if (currentScene->sceneStatus == currentScene->sceneState::EXIT)
-			{
-				switch (currentScene->gameState)
-				{
-				case Scene::stateType::SPLASHSCREEN:
-					currentScene = new Splashscreen();
-					break;
-				case Scene::stateType::MENU:
-					delete currentScene;
-					currentScene = new Menu();
-					break;
-				case Scene::stateType::PLAY:
-					delete currentScene;
-					currentScene = new Play();
-					break;
-				case Scene::stateType::RANKING:
-					delete currentScene;
-					currentScene = new Ranking();
-					break;
-				default:
-					delete currentScene;
-					exit(0);
-					break;
-				}
-				currentScene->sceneStatus = currentScene->sceneState::RUNNING;
-			}
-			
 	}		
+	
+	if (currentScene->sceneStatus == currentScene->sceneState::EXIT)
+	{
+		switch (currentScene->gameState)
+		{
+		case Scene::stateType::SPLASHSCREEN:
+			currentScene = new Splashscreen();
+			break;
+		case Scene::stateType::MENU:
+			delete currentScene;
+			currentScene = new Menu();
+			break;
+		case Scene::stateType::PLAY:
+			delete currentScene;
+			currentScene = new Play();
+			break;
+		case Scene::stateType::RANKING:
+			delete currentScene;
+			currentScene = new Ranking();
+			break;
+		default:
+			delete currentScene;
+			exit(0);
+			break;
+		}
+			currentScene->sceneStatus = currentScene->sceneState::START_GAME;
+	}
+
 	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 }
 

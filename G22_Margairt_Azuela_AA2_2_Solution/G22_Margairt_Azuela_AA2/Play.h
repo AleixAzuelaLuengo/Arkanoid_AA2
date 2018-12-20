@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Brick.h"
-#include "Button.h"
+#include "Types.h"
 #include "Scene.h"
 
 class Play: public Scene
@@ -14,15 +14,14 @@ public:
 	void Draw();
 private:
 	Rect BG;
+	Rect PauseBG;
 	Player playerLeft;
 	Player playerRight;
 	Ball ball;
 	//Brick *brickList[][];
-	Button soundSwitch;
 	SDL_Event event;
 	MyText pause;
 	MyText soundOnSwitch;
-	
 protected:
 	
 

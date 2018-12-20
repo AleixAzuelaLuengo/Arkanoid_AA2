@@ -72,28 +72,22 @@ Vector2 Renderer::GetTextureSize(const std::string &id) {
 };
 
 void Renderer::PushImage(const std::string &id, const Rect &rect) {
-	SDL_Rect temp = ConvertFromRectToSDL_Rect(rect);
-	SDL_RenderCopy(m_renderer, m_textureData[id], nullptr, &temp);
+	SDL_RenderCopy(m_renderer, m_textureData[id], nullptr, &ConvertFromRectToSDL_Rect(rect));
 };
 
 void Renderer::PushRotatedImage(const std::string & id, const Rect & rect, float angle)
 {
 	SDL_Point center = { rect.proportions.x / 2, rect.proportions.y / 2 };
-	SDL_Rect temp = ConvertFromRectToSDL_Rect(rect);
-	SDL_RenderCopyEx(m_renderer, m_textureData[id], nullptr, &temp, angle, &center, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(m_renderer, m_textureData[id], nullptr, &ConvertFromRectToSDL_Rect(rect), angle, &center, SDL_FLIP_NONE);
 };
 
 void Renderer::PushSprite(const std::string &id, const Rect &rectSprite,const Rect &rectPos) {
-	SDL_Rect temp = ConvertFromRectToSDL_Rect(rectSprite);
-	SDL_Rect temp2 = ConvertFromRectToSDL_Rect(rectPos);
-	SDL_RenderCopy(m_renderer, m_textureData[id], &temp, &temp2);
+	SDL_RenderCopy(m_renderer, m_textureData[id], &ConvertFromRectToSDL_Rect(rectSprite), &ConvertFromRectToSDL_Rect(rectPos));
 }
 
 void Renderer::PushRotatedSprite(const std::string & id, const Rect & rectSprite, const Rect & rectPos, float angle){
 	SDL_Point center = { rectPos.proportions.x / 2, rectPos.proportions.y / 2 };
-	SDL_Rect temp = ConvertFromRectToSDL_Rect(rectSprite);
-	SDL_Rect temp2 = ConvertFromRectToSDL_Rect(rectPos);
-	SDL_RenderCopyEx(m_renderer, m_textureData[id], &temp, &temp2, angle, &center, SDL_FLIP_NONE);
+	SDL_RenderCopyEx(m_renderer, m_textureData[id], &ConvertFromRectToSDL_Rect(rectSprite), &ConvertFromRectToSDL_Rect(rectPos), angle, &center, SDL_FLIP_NONE);
 }
 
 void Renderer::SetRendreDrawColor(int r, int g, int b)

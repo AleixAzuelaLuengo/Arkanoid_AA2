@@ -1,5 +1,4 @@
 #include "Splashscreen.h"
-#include "Renderer.h"
 #include <time.h>
 
 Splashscreen::Splashscreen()

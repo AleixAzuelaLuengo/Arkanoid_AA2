@@ -3,7 +3,7 @@
 class Inputs
 {
 public:
-	enum InputType {UpArrow, DownArrow, W, A, P, SpaceBar, Quit, LeftClick, ENDINPUT };
+	enum InputType {UpArrow, DownArrow, W, S, P, SpaceBar, Quit, LeftClick, ENDINPUT };
 	enum MousePosition { X, Y, ENDMOUSE };
 	Inputs();
 	~Inputs();

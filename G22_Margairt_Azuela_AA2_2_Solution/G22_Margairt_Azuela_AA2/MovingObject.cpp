@@ -7,9 +7,6 @@ MovingObject::MovingObject()
 }
 
 
-MovingObject::~MovingObject()
-{
-}
 
 template<class T>inline bool MovingObject::detectCollision(T ball, T obj)
 {

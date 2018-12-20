@@ -41,7 +41,8 @@ void GameManager::SetMouse(float i, Inputs::MousePosition mouse)
 void GameManager::Update()
 {
 
-	if (SDL_PollEvent(&event)) {
+	while (SDL_PollEvent(&event))
+	{
 			switch (event.type) {
 			case SDL_QUIT:
 				SetInput(true, Inputs::InputType::Quit);
@@ -147,8 +148,9 @@ void GameManager::Update()
 				}
 				currentScene->sceneStatus = currentScene->sceneState::RUNNING;
 			}
-			currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
+			
 	}		
+	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 }
 
 void GameManager::Draw()

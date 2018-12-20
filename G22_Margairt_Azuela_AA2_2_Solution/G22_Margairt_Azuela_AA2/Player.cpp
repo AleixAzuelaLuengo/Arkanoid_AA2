@@ -44,16 +44,7 @@ void Player::SetPuntuation(int newPunt)
 	puntuation = newPunt;
 }
 
-int Player::GetSpeed()
-{
-	//return speed; 
-	return 0;
-}
 
-void Player::SetSpeed(int newSpeed)
-{
-	//speed = newSpeed;
-}
 
 PlayerState Player::GetState()
 {

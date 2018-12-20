@@ -24,12 +24,13 @@ Play::~Play()
 
 void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
+	
 	if (input.GetInput(input.W))
-	{
+	{		
 		playerLeft.SetPosition((playerLeft.GetPosition().x)  , (playerLeft.GetPosition().y + 1));
 	}
 	else if (input.GetInput(input.S))
-	{
+	{		
 		playerLeft.SetPosition((playerLeft.GetPosition().x), (playerLeft.GetPosition().y - 1));
 	}
 	if (input.GetInput(input.UpArrow))
@@ -37,9 +38,17 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		playerRight.SetPosition((playerRight.GetPosition().x), (playerRight.GetPosition().y + 1));
 	}
 	else if (input.GetInput(input.DownArrow))
-	{
+	{		
 		playerRight.SetPosition((playerRight.GetPosition().x), (playerRight.GetPosition().y - 1));
 	}
+	Vector2 aux = MovingObject::Instance()->playerLimits(playerLeft.GetPosition());
+	playerLeft.SetPosition(aux.x, aux.y);
+
+	aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition());
+	playerRight.SetPosition(aux.x, aux.y);
+
+	ball.SetSpeed(MovingObject::Instance()->ballLimits(ball.GetPosition(), ball.GetSpeed()));
+	ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
 }
 
 void Play::Draw()

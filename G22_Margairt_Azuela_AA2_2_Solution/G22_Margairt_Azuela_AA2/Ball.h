@@ -5,10 +5,10 @@ class Ball
 public:
 	Ball();
 	~Ball();
-	void SetSpeed(Vector2 );
+	void SetSpeed(Vector2);
 	void SetPosition(int, int);
 	Vector2 GetSpeed();
-	Vector2 GetBallPos();
+	Vector2 GetPosition();
 	Rect GetRect();
 private:
 	Vector2 speed;

@@ -12,8 +12,6 @@ public:
 	void SetHp(int);
 	int GetPuntuation();
 	void SetPuntuation(int);
-	int GetSpeed();
-	void SetSpeed(int);
 	PlayerState GetState();
 	void SetState(PlayerState);
 	Rect GetRect();

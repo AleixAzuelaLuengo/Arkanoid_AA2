@@ -14,5 +14,8 @@ const int PLAYER_WIDTH = 60;
 const int PLAYER_HEIGHT = 20;
 const int BALL_WIDTH = 15;
 const int BALL_HEIGHT = 15;
+const int MAP_START_X_AND_Y = 26;
+const int MAP_END_X = 755;
+const int MAP_END_Y = 455;
 
 #define FPS 60

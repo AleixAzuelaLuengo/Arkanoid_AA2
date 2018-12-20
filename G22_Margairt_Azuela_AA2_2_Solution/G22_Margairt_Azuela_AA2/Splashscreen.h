@@ -13,6 +13,10 @@ public:
 	void Draw();
 
 private:
-	
+	Rect BG;
+	Rect PauseBG;
+	MyText ArkanoidText;
+	int speed;
+	double sec = 0;
 };
 

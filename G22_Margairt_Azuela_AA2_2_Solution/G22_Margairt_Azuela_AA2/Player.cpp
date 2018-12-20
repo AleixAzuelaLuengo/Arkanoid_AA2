@@ -11,7 +11,7 @@ Player::Player()
 	puntuationText.font.path = MENU_FONT;
 	puntuationText.font.id = "PUNTUATION_FONT";
 	puntuationText.rect = { 0, 0, 100,40 };
-
+	speed = 4;
 	PlayerRect.proportions = { PLAYER_WIDTH, PLAYER_HEIGHT };
 	HP = 3;
 	for(int i = 0; i < HP; i++) hpBAR[i] = { 0 , 0 , PLAYER_HEIGHT  , PLAYER_WIDTH };

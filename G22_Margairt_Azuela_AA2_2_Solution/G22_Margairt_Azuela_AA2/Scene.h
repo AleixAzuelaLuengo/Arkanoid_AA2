@@ -11,7 +11,7 @@ public:
 	//void SetMusic(Music );
 	//Music GetMusic();
 	enum sceneState { START_GAME, RUNNING, PAUSED, EXIT }sceneStatus = sceneState::EXIT;
-	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::MENU;
+	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::SPLASHSCREEN;
 	
 	virtual void Update(Inputs &input,sceneState &sceneStatus, stateType &gameState) = 0;
 	virtual void Draw() = 0;

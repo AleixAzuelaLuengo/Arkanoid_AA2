@@ -20,6 +20,8 @@ private:
 	//Brick *brickList[][];
 	Button soundSwitch;
 	SDL_Event event;
+	MyText pause;
+	MyText soundOnSwitch;
 	
 protected:
 	

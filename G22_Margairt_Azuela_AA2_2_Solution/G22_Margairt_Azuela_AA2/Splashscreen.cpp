@@ -1,6 +1,4 @@
 #include "Splashscreen.h"
-#include "Renderer.h"
-#include <time.h>
 
 Splashscreen::Splashscreen()
 {
@@ -22,12 +20,6 @@ Splashscreen::Splashscreen()
 
 Splashscreen::~Splashscreen()
 {
-}
-
-void Splashscreen::SetTextPos(int x, int y)
-{
-	ArkanoidText.rect.position.x = x;
-	ArkanoidText.rect.position.y = y;
 }
 
 void Splashscreen::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)

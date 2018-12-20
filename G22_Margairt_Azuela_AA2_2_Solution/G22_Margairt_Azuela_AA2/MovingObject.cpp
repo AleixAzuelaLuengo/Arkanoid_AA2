@@ -7,10 +7,6 @@ MovingObject::MovingObject()
 }
 
 
-MovingObject::~MovingObject()
-{
-}
-
 template<class T>inline bool MovingObject::detectCollision(T ball, T obj)
 {
 	Vector2 direction = { ball.GetBallPos().x + ball.GetSpeed().x, ball.GetBallPos().y + ball.GetSpeed().y };

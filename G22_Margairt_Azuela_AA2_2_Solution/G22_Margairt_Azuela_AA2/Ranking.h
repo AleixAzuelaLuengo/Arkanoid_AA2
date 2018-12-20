@@ -2,6 +2,8 @@
 #include <vector>
 #include <string>
 #include "Scene.h"
+#include "Types.h"
+#include "MovingObject.h"
 
 class Ranking: public Scene
 {

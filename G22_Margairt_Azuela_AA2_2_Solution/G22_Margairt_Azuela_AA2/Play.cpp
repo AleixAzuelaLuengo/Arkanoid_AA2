@@ -24,7 +24,7 @@ Play::Play()
 	soundOnSwitch.rect.position.x = (SCREEN_WIDTH / 6) - (soundOnSwitch.rect.proportions.x / 2);
 
 	BG = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
-	playerLeft.SetPosition(10, SCREEN_HEIGHT / 2);
+	playerLeft.SetPosition(10, 15+PLAYER_HEIGHT/2);
 	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2);
 	ball.SetPosition(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 

@@ -53,10 +53,10 @@ Vector2 MovingObject::ballLimits(Vector2 ballP,  Vector2 ballS)
 
 Vector2 MovingObject::playerLimits(Vector2 p)
 {	
-	if (p.y < MAP_START_X_AND_Y)
-		p.y += 1;
+	if (p.y < MAP_START_X_AND_Y + PLAYER_HEIGHT / 2 - 10)
+		p.y += 5;
 	if (p.y > MAP_END_Y - PLAYER_HEIGHT / 2)
-		p.y -= 1;
+		p.y -= 5;
 	return p;
 }
 

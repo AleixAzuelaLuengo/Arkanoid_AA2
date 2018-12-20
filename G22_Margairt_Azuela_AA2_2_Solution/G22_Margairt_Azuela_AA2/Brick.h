@@ -4,6 +4,7 @@ enum BrickType{ };
 class Brick
 {
 public:
+	enum brickType { NORMAL, HEAVY, FIX, END };
 	Brick();
 	~Brick();
 	Brick(BrickType, int);

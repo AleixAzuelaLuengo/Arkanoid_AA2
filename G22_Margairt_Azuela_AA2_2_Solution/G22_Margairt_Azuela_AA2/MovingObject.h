@@ -15,7 +15,6 @@ public:
 		return movingObject;
 	};
 	MovingObject();
-	~MovingObject();
 	template <class T> void Move(T object, Vector2 speed);
 	template <class T> bool detectCollision(T ball, T object);
 	template <class T> Vector2 changeSpeed(T object, Vector2 collision);

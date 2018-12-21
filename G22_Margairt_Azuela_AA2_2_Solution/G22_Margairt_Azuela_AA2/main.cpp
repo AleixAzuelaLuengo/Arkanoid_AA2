@@ -3,11 +3,13 @@
 #include "Ranking.h"
 #include "Renderer.h"
 #include "GameManager.h"
+#include "Map.h"
+#include <time.h>
 
 int main(int, char*[])
 {
+	srand(time(NULL));
 	Renderer::Instance();
-	Menu menu;
 	GameManager gm = GameManager();
 	while (1)
 	{

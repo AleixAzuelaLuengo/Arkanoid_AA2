@@ -5,8 +5,8 @@
 Ball::Ball()
 {
 	ballRect.proportions = { BALL_WIDTH, BALL_HEIGHT };
-	speed.x = 1;
-	speed.y = 1;
+	speed.x = 2;
+	speed.y = 2;
 }
 
 

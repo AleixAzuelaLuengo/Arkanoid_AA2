@@ -124,6 +124,7 @@
     <ClInclude Include="Constants.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="Inputs.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MovingObject.h" />
     <ClInclude Include="Music.h" />
@@ -141,6 +142,7 @@
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Inputs.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MovingObject.cpp" />
     <ClCompile Include="Music.cpp" />

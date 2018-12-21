@@ -1,8 +1,8 @@
 #pragma once
 #include "Player.h"
 #include "Ball.h"
-#include "Brick.h"
 #include "Types.h"
+#include "Map.h"
 #include "Scene.h"
 
 class Play: public Scene
@@ -18,6 +18,7 @@ private:
 	Player playerLeft;
 	Player playerRight;
 	Ball ball;
+	Map brick;
 	//Brick *brickList[][];
 	SDL_Event event;
 	MyText pause;

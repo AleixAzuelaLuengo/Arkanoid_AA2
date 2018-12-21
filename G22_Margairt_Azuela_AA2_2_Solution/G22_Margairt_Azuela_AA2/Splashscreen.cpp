@@ -27,12 +27,13 @@ void Splashscreen::Update(Inputs &input, sceneState &sceneStatus, stateType &gam
 	sec += DELAY_TIME;
 	if (sec >= 3000)
 	{
+		
 		sceneStatus = sceneState::EXIT;
 		gameState = stateType::MENU;
 	}
 	if(ArkanoidText.idColor.r < 255) ArkanoidText.idColor.r += 1;
 	
-	ArkanoidText.rect.position.y += 1;
+	if(ArkanoidText.rect.position.y < SCREEN_HEIGHT/3) ArkanoidText.rect.position.y +=2 ;
 	Renderer::Instance()->LoadTextureText(ArkanoidText.font.id, ArkanoidText);
 }
 

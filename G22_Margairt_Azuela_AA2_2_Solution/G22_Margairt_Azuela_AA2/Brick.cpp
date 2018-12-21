@@ -95,3 +95,7 @@ char Brick::GetType()
 	if (type == BrickType::F) return 'F';
 }
 
+Rect Brick::GetFlipedRect()
+{
+	return Rect{ brickRect.position.x, brickRect.position.y, brickRect.proportions.y, brickRect.proportions.x };
+}

@@ -27,5 +27,5 @@ const int MAP_END_X = 755;
 const int MAP_END_Y = 455;
 const Rect GREENBLOCK_FIRST = { 0,0, 40, 20 };
 const Rect REDBLOCK_FIRST = { 0,20, 40, 20 };
-const Rect FIXEDBLOCK_FIRST = { 0,20, 40, 20 };
+const Rect FIXEDBLOCK_FIRST = { 0,40, 40, 20 };
 #define FPS 60

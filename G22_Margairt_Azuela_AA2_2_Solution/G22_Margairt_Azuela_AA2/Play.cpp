@@ -207,9 +207,9 @@ void Play::Draw()
 
 	for (int i = 0; i < brickList.size(); i++)
 	{
-		if (brickList[i].GetType() == 'N') Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_FIRST, brickList[i].GetRect(), 90);
-		if (brickList[i].GetType() == 'H') Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetRect(), 90);
-		if (brickList[i].GetType() == 'F') Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetRect(), 90);
+		if (brickList[i].GetType() == 'N') Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+		if (brickList[i].GetType() == 'H') Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+		if (brickList[i].GetType() == 'F') Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
 	}
 	
 	if(playerLeft.GetHP() >= 3)

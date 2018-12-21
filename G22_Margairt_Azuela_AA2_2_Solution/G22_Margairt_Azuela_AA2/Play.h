@@ -23,7 +23,7 @@ private:
 	SDL_Event event;
 	MyText pause;
 	MyText soundOnSwitch;
-	
+	std::vector<Brick> brickList;
 
 };
 

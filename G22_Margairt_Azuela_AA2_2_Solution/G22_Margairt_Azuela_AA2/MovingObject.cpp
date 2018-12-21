@@ -26,15 +26,16 @@ Vector2 MovingObject::BallBounce(Rect ball, Rect obj, Vector2 ballSpeed)
 	return ballSpeed;
 }
 
-template<class T>
-bool MovingObject::Collision(T ball, T collision)
+
+bool MovingObject::Collision(Rect ball, Rect collision)
 {
 	
-	if ((ball.x > collision.x) && (ball.x < (collision.x + collision.w)) && (ball.y > collision.y) && (ball.y < (collision.y + collision.h))) return true;
-	if ((ball.x + ball.w > collision.x) && (ball.x + ball.w < (collision.x + collision.w)) && (ball.y > collision.y) && (ball.y < (collision.y + collision.h))) return true;
-	if ((ball.x > collision.x) && (ball.x < (collision.x + collision.w)) && (ball.y + ball.h > collision.y) && (ball.y + ball.h < (collision.y + collision.h))) return true;
-	if ((ball.x + ball.w > collision.x) && (ball.x + ball.w < (collision.x + collision.w)) && (ball.y + ball.h > collision.y) && (ball.y + ball.h < (collision.y + collision.h))) return true;
+	if ((ball.position.x > collision.position.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
+	if ((ball.position.x + ball.proportions.x > collision.position.x) && (ball.position.x + ball.proportions.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
+	if ((ball.position.x > collision.position.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y + ball.proportions.y > collision.position.y) && (ball.position.y + ball.proportions.y < (collision.position.y + collision.proportions.y))) return true;
+	if ((ball.position.x + ball.proportions.x > collision.position.x) && (ball.position.x + ball.proportions.x < (collision.position.x + collision.proportions.x)) && (ball.position.y + ball.proportions.y > collision.position.y) && (ball.position.y + ball.proportions.y < (collision.position.y + collision.proportions.y))) return true;
 
+	return false;
 }
 
 

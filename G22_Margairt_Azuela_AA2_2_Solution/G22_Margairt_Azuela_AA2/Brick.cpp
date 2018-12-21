@@ -95,7 +95,3 @@ char Brick::GetType()
 	if (type == BrickType::F) return 'F';
 }
 
-Rect Brick::GetRect()
-{
-	return brickRect;
-}

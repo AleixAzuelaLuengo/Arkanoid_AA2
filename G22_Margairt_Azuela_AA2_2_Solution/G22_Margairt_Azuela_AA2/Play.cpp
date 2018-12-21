@@ -45,6 +45,11 @@ Play::Play()
 	
 	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x*2, playerLeft.GetRect().position.y);
 
+	int lenght = brick.GetVectorLenght();
+	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
+	for (int i = 0; i < lenght; i++) brickList[i].SetID(i);
+	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + 300, brickList[i].GetPosition('y')*BRICK_HEIGHT);
+
 	Renderer::Instance()->LoadTexture("BRICK", BRICK_SPRITESHEET);
 	Renderer::Instance()->LoadTexture("BALL", BALL_SPRITE);
 	Renderer::Instance()->LoadFont(pause.font);
@@ -119,33 +124,31 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition());
 		playerRight.SetPosition(aux.x, aux.y);
 
-		for(int i=0; i<11;i++)
-			for(int j=0; j<12; j++)
-				if(brickList[i][j] != nullptr)
-					if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i][j]->GetRect()))
-					{
-						ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i][j]->GetRect(), ball.GetSpeed()));
-						brickList[i][j]->SetHP(brickList[i][j]->GetHP()-1);
+		for(int i=0; i<brickList.size();i++)
+			if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i].GetRect()))
+			{
+				ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect(), ball.GetSpeed()));
+				brickList[i].SetHP(brickList[i].GetHP()-1);
 
-						switch (brickList[i][j]->GetHP())
-						{
-						case 0:
-							//Destroy
-							break;
-						case 1:
-							//Animacio
-							break;
-						case 2:
-							//Animacio
-							break;
-						case 3:
-							//Animacio
-							break;
+				switch (brickList[i].GetHP())
+				{
+				case 0:
+					//Destroy
+					break;
+				case 1:
+					//Animacio
+					break;
+				case 2:
+					//Animacio
+					break;
+				case 3:
+					//Animacio
+					break;
 
-						default:
-							break;
-						}
-					}
+				default:
+					break;
+				}
+			}
 
 
 
@@ -191,11 +194,8 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 void Play::Draw()
 {
-	std::vector<Brick> brickList;
-	int lenght = brick.GetVectorLenght();
-	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
-	for (int i = 0; i < lenght; i++) brickList[i].SetID(i);
-	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + 300 , brickList[i].GetPosition('y')*BRICK_HEIGHT );
+	
+	
 	Renderer::Instance()->Render();
 	Renderer::Instance()->PushImage("BG_MENU", BG);
 	Renderer::Instance()->PushRotatedImage("PLAYER", playerLeft.GetFlipedRect(), 90);
@@ -205,7 +205,7 @@ void Play::Draw()
 	Renderer::Instance()->PushImage(playerRight.GetText().font.id, playerRight.GetText().rect);
 	
 
-	for (int i = 0; i < lenght; i++)
+	for (int i = 0; i < brickList.size(); i++)
 	{
 		if (brickList[i].GetType() == 'N') Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_FIRST, brickList[i].GetRect(), 90);
 		if (brickList[i].GetType() == 'H') Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetRect(), 90);

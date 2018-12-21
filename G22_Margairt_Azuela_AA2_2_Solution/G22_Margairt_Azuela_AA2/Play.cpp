@@ -7,8 +7,9 @@
 
 Play::Play()
 {
+
 	PauseBG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
-		
+	
 	pause.text = "PAUSE";
 	pause.font.size = 80;
 	pause.idColor = ButtonNotSelected;
@@ -44,9 +45,7 @@ Play::Play()
 	
 	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x*2, playerLeft.GetRect().position.y);
 
-	//Brick brickList;
-
-	Renderer::Instance()->LoadTexture("PAUSE_BG", PAUSE_BG);
+	Renderer::Instance()->LoadTexture("BRICK", BRICK_SPRITESHEET);
 	Renderer::Instance()->LoadTexture("BALL", BALL_SPRITE);
 	Renderer::Instance()->LoadFont(pause.font);
 	Renderer::Instance()->LoadTextureText(pause.font.id, pause);
@@ -192,6 +191,11 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 void Play::Draw()
 {
+	std::vector<Brick> brickList;
+	int lenght = brick.GetVectorLenght();
+	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
+	for (int i = 0; i < lenght; i++) brickList[i].SetID(i);
+	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + 300 , brickList[i].GetPosition('y')*BRICK_HEIGHT );
 	Renderer::Instance()->Render();
 	Renderer::Instance()->PushImage("BG_MENU", BG);
 	Renderer::Instance()->PushRotatedImage("PLAYER", playerLeft.GetFlipedRect(), 90);
@@ -201,6 +205,13 @@ void Play::Draw()
 	Renderer::Instance()->PushImage(playerRight.GetText().font.id, playerRight.GetText().rect);
 	
 
+	for (int i = 0; i < lenght; i++)
+	{
+		if (brickList[i].GetType() == 'N') Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_FIRST, brickList[i].GetRect(), 90);
+		if (brickList[i].GetType() == 'H') Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetRect(), 90);
+		if (brickList[i].GetType() == 'F') Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetRect(), 90);
+	}
+	
 	if(playerLeft.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));
 	if (playerLeft.GetHP() >= 2)

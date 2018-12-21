@@ -1,19 +1,13 @@
 #pragma once
 #include "Brick.h"
-
+#include "Constants.h"
+#include <vector>
 class Map
 {
 public:
-	int bricks[11][12];
-
-
+	int GetVectorLenght();
+	Brick GetBrick(int position);
 	Map();
-	~Map();
-	void ReadXML();
-	
 private:
-	int rows;
-	int cols;
-	
+	std::vector<Brick> brickList;
 };
-

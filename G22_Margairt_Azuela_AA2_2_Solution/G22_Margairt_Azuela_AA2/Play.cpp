@@ -35,7 +35,7 @@ Play::Play()
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(2).position.x + playerLeft.GetHPBar(2).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
 	
 
-	playerRight.SetPosition(SCREEN_WIDTH /2 /*- SCREEN_WIDTH / 11*/, SCREEN_HEIGHT / 2 -45);
+	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2 -45);
 	playerRight.SetPosHealth(SCREEN_WIDTH - (SCREEN_WIDTH / 10)*2 -35, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
 	playerRight.SetPosHealth(playerRight.GetHPBar(3).position.x - playerRight.GetHPBar(3).proportions.x -10 , SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerRight.SetPosHealth(playerRight.GetHPBar(2).position.x - playerRight.GetHPBar(2).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);

@@ -50,3 +50,8 @@ BrickType Brick::GetType()
 {
 	return type;
 }
+
+Rect Brick::GetRect()
+{
+	return brickRect;
+}

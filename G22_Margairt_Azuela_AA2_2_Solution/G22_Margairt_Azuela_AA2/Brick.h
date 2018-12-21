@@ -1,4 +1,5 @@
 #pragma once
+#include "Types.h"
 enum BrickType{ };
 
 class Brick
@@ -16,10 +17,13 @@ public:
 	int GetHP();
 	void SetType(BrickType);
 	BrickType GetType();
+	Rect GetRect();
 private:
 	int puntuation;
 	int probability;
 	int hp;
 	BrickType type;
+	Rect brickRect;
+	//Rect brickRect;
 };
 

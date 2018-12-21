@@ -13,7 +13,7 @@ public:
 	void SetPosition(int x, int y );
 	int GetHP();
 	void SetHp(int);
-	int GetPuntuation(int );
+	int GetPuntuation();
 	void SetPuntuation(int);
 	void MoveUp();
 	void MoveDown();
@@ -22,13 +22,14 @@ public:
 	Rect GetRect();
 	Rect GetHPBar(int numHP);
 	MyText GetText();
+	void SetText(int);
 	void SetTextPos(int x, int y);
 	void SetPosHealth(int x, int y, int numHP);
 private:
 	int HP;
 	Rect hpBAR[3];
 	MyText puntuationText;
-	int puntuation[1][1][1][1];
+	int puntuation;
 	int speed;
 	PlayerState state;
 	Rect PlayerRect;

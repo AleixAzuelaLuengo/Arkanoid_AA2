@@ -5,7 +5,8 @@
 
 Player::Player()
 {
-	puntuationText.text = "Points: ";
+	puntuation = 0;
+	puntuationText.text = "Points: " + std::to_string(puntuation);
 	puntuationText.font.size = 8;
 	puntuationText.idColor = Black;
 	puntuationText.font.path = MENU_FONT;
@@ -63,17 +64,15 @@ void Player::SetHp(int newHP)
 	HP = newHP;
 }
 
-int Player::GetPuntuation(int)
+int Player::GetPuntuation()
 {
-	return 0;
-	//return puntuation[i][][][];
+	return puntuation;
 }
 
 void Player::SetPuntuation(int newPunt)
 {
-	//puntuation = newPunt;
+	puntuation = newPunt;
 }
-
 
 
 void Player::MoveUp()
@@ -110,6 +109,11 @@ Rect Player::GetHPBar(int i)
 MyText Player::GetText()
 {
 	return puntuationText;
+}
+
+void Player::SetText(int score)
+{
+	 puntuationText.text = "Points: " + std::to_string(score);
 }
 
 void Player::SetTextPos(int x, int y)

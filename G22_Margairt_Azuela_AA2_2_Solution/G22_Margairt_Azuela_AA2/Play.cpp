@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "Renderer.h"
 #include "MovingObject.h"
-
+#include <iostream>
 
 
 Play::Play()
@@ -33,7 +33,8 @@ Play::Play()
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(3).position.x + playerLeft.GetHPBar(3).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(2).position.x + playerLeft.GetHPBar(2).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
 	
-	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2 -45);
+
+	playerRight.SetPosition(SCREEN_WIDTH /2 /*- SCREEN_WIDTH / 11*/, SCREEN_HEIGHT / 2 -45);
 	playerRight.SetPosHealth(SCREEN_WIDTH - (SCREEN_WIDTH / 10)*2 -35, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
 	playerRight.SetPosHealth(playerRight.GetHPBar(3).position.x - playerRight.GetHPBar(3).proportions.x -10 , SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerRight.SetPosHealth(playerRight.GetHPBar(2).position.x - playerRight.GetHPBar(2).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
@@ -42,6 +43,8 @@ Play::Play()
 	playerRight.SetTextPos(SCREEN_WIDTH - (SCREEN_WIDTH / 10) * 4 - 15, SCREEN_HEIGHT - SCREEN_HEIGHT / 6 + 5);
 	
 	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x*2, playerLeft.GetRect().position.y);
+
+	//Brick brickList;
 
 	Renderer::Instance()->LoadTexture("PAUSE_BG", PAUSE_BG);
 	Renderer::Instance()->LoadTexture("BALL", BALL_SPRITE);
@@ -117,8 +120,45 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition());
 		playerRight.SetPosition(aux.x, aux.y);
 
+		for(int i=0; i<11;i++)
+			for(int j=0; j<12; j++)
+				if(brickList[i][j] != nullptr)
+					if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i][j]->GetRect()))
+					{
+						ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i][j]->GetRect(), ball.GetSpeed()));
+						brickList[i][j]->GetHP();
+
+						switch (brickList[i][j]->GetHP())
+						{
+						case 0:
+							//Destroy
+							break;
+						case 1:
+							//Animacio
+							break;
+						case 2:
+							//Animacio
+							break;
+						case 3:
+							//Animacio
+							break;
+
+						default:
+							break;
+						}
+					}
+
+
+
 		ball.SetSpeed(MovingObject::Instance()->ballLimits(ball.GetPosition(), ball.GetSpeed()));
+		ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetRect(), ball.GetSpeed()));
+		ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetRect(), ball.GetSpeed()));
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
+
+		playerLeft.SetPuntuation((playerLeft.GetPuntuation() + 1));
+		playerLeft.SetText(playerLeft.GetPuntuation());
+		Renderer::Instance()->LoadTextureText(playerLeft.GetText().font.id, playerLeft.GetText());
+		
 	}
 	else if (sceneStatus == sceneState::PAUSED)
 	{
@@ -159,6 +199,7 @@ void Play::Draw()
 	Renderer::Instance()->PushImage("BALL", ball.GetRect());
 	Renderer::Instance()->PushImage(playerLeft.GetText().font.id, playerLeft.GetText().rect);
 	Renderer::Instance()->PushImage(playerRight.GetText().font.id, playerRight.GetText().rect);
+	
 
 	if(playerLeft.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));

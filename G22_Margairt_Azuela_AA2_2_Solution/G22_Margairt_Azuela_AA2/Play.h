@@ -18,7 +18,7 @@ private:
 	Player playerLeft;
 	Player playerRight;
 	Ball ball;
-	//Brick *brickList[][];
+	Brick *brickList[11][12];
 	SDL_Event event;
 	MyText pause;
 	MyText soundOnSwitch;

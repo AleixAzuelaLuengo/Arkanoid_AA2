@@ -126,7 +126,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 					if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i][j]->GetRect()))
 					{
 						ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i][j]->GetRect(), ball.GetSpeed()));
-						brickList[i][j]->GetHP();
+						brickList[i][j]->SetHP(brickList[i][j]->GetHP()-1);
 
 						switch (brickList[i][j]->GetHP())
 						{

@@ -18,6 +18,7 @@ public:
 	void SetType(BrickType);
 	BrickType GetType();
 	Rect GetRect();
+	//void SetRect();
 private:
 	int puntuation;
 	int probability;

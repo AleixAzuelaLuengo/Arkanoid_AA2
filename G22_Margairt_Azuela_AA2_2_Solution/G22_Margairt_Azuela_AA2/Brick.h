@@ -16,6 +16,7 @@ public:
 	void SetID(int id);
 	int GetID();
 	Rect GetRect();
+	Rect GetFlipedRect();
 	int GetProbability();
 	void SetHP(int );
 	int GetHP();

@@ -5,6 +5,7 @@
 #include <iostream>
 Menu::Menu()
 {	
+	Renderer::Instance()->Clear();
 	BG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
 
 	startGame.text = "Play";

@@ -6,7 +6,7 @@
 
 Play::Play()
 {
-
+	Renderer::Instance()->Clear();
 	PauseBG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
 	
 	pause.text = "PAUSE";
@@ -156,7 +156,7 @@ void Play::Draw()
 	int lenght = brick.GetVectorLenght();
 	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
 	for (int i = 0; i < lenght; i++) brickList[i].SetID(i);
-	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + 300 , brickList[i].GetPosition('y')*BRICK_HEIGHT );
+	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + brickList[i].GetRect().proportions.x + SCREEN_WIDTH/3, brickList[i].GetPosition('y')*BRICK_HEIGHT + brickList[i].GetRect().proportions.y);
 	Renderer::Instance()->Render();
 	Renderer::Instance()->PushImage("BG_MENU", BG);
 	Renderer::Instance()->PushRotatedImage("PLAYER", playerLeft.GetFlipedRect(), 90);
@@ -167,9 +167,32 @@ void Play::Draw()
 
 	for (int i = 0; i < lenght; i++)
 	{
-		if (brickList[i].GetType() == 'N') Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
-		if (brickList[i].GetType() == 'H') Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
-		if (brickList[i].GetType() == 'F') Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+		if (brickList[i].GetType() == 'N' && brickList[i].GetHP() == 1)
+		{
+			Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+			long sec = 0;
+			sec += DELAY_TIME;
+			if (sec <= 300 && sec >= 250 && brickList[i].GetHP() == 0)
+			{
+				Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
+			}
+			else if (sec <= 600 && sec >= 500 && brickList[i].GetHP() == 0)
+			{
+				Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_THIRD, brickList[i].GetFlipedRect(), 90);
+				brickList[i].SetHP(-1);
+			}
+		}
+		if (brickList[i].GetType() == 'H')
+		{
+			if(brickList[i].GetHP() == 3) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+			else if (brickList[i].GetHP() == 2) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
+			else if (brickList[i].GetHP() == 1) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_THIRD, brickList[i].GetFlipedRect(), 90);
+		}
+		if (brickList[i].GetType() == 'F')
+		{
+			if (brickList[i].GetHP()%2 != 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+			else if (brickList[i].GetHP()%2 == 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
+		}
 	}
 	
 	if(playerLeft.GetHP() >= 3)

@@ -61,8 +61,5 @@ Map::Map()
 		if (tempBrick.GetType() == 'F') tempBrick.SetHP(-1);
 		brickList.push_back(tempBrick);
 	}
-	//tempBrick.SetPosition( SCRE,200);
-	tempBrick.SetType('N');
-	tempBrick.SetPuntuation((rand() % (normalHP[1] - normalHP[0] + 1) + normalHP[0]));
-	brickList.push_back(tempBrick);
+	
 }

@@ -1,5 +1,5 @@
 #include "MovingObject.h"
-
+#include <iostream>
 
 
 MovingObject::MovingObject()
@@ -8,29 +8,36 @@ MovingObject::MovingObject()
 
 
 
-Vector2 MovingObject::BallBounce(Rect ball, Rect obj, Vector2 ballSpeed)
+int MovingObject::BallBounce(Rect ball, Rect obj)
 {
-	//Vector2 direction = { ball.GetBallPos().x + ball.GetSpeed().x, ball.GetBallPos().y + ball.GetSpeed().y };
-	
-	//if ((ball.position.y <= (obj.position.y + obj.proportions.y - 1)) && (ball.position.y >= (obj.position.y + 1)))
-	if ((((ballSpeed.x < 0) && (ball.position.x == (obj.position.x + obj.proportions.x * 2)))
-		|| (((ballSpeed.x > 0) && (ball.position.x + ball.proportions.x == obj.position.x + obj.proportions.x)))) && ((ball.position.y <= (obj.position.y + obj.proportions.y - 1)) && (ball.position.y >= (obj.position.y - obj.proportions.y/2 + 1))))
+	std::cout << obj.position.x <<" "<< obj.position.y << " " << obj.proportions.x << " " << obj.proportions.y << " " << std::endl;
+
+	if (((((ball.position.x + ball.proportions.x) >= obj.position.x) && ((ball.position.x + obj.proportions.x) <= (obj.position.x  + obj.proportions.x))) ||
+		((ball.position.x <= (obj.position.x + obj.proportions.x)) && ((ball.position.x + ball.proportions.x - obj.proportions.x) >= obj.position.x ))) &&
+		(((ball.position.y + ball.proportions.y) >= obj.position.y) && (ball.position.y <= (obj.position.y + obj.proportions.y))))
 	{
-		ballSpeed.x *= -1;
+ 		return 1;
 	}
-	else if ((((ballSpeed.y < 0) && (ball.position.y == (obj.position.y + obj.proportions.y)))
-		|| (((ballSpeed.y > 0) && (ball.position.y + ball.proportions.y == obj.position.y)))) && ((ball.position.x > (obj.position.x + obj.proportions.x + ball.proportions.x / 2 - 1)) && (ball.position.x < obj.position.x - ball.proportions.x / 2 + 1)))
+
+
+	if (((((ball.position.y + ball.proportions.y) >= obj.position.y) && ((ball.position.y + obj.proportions.y) <= (obj.position.y + obj.proportions.y))) ||
+		((ball.position.y <= (obj.position.y + obj.proportions.y)) && ((ball.position.y + ball.proportions.y - obj.proportions.y) >= obj.position.y))) &&
+		(((ball.position.x + ball.proportions.x) >= obj.position.x) && (ball.position.x <= (obj.position.x + obj.proportions.x))))
 	{
-		ballSpeed.y *= -1;
+		return 2;
 	}
-	return ballSpeed;
+
+
+
+	return 0;
 }
+
 
 
 bool MovingObject::Collision(Rect ball, Rect collision)
 {
 	
-	if ((ball.position.x > collision.position.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
+	if ((ball.position.x > collision.position.x+ collision.proportions.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
 	if ((ball.position.x + ball.proportions.x > collision.position.x) && (ball.position.x + ball.proportions.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
 	if ((ball.position.x > collision.position.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y + ball.proportions.y > collision.position.y) && (ball.position.y + ball.proportions.y < (collision.position.y + collision.proportions.y))) return true;
 	if ((ball.position.x + ball.proportions.x > collision.position.x) && (ball.position.x + ball.proportions.x < (collision.position.x + collision.proportions.x)) && (ball.position.y + ball.proportions.y > collision.position.y) && (ball.position.y + ball.proportions.y < (collision.position.y + collision.proportions.y))) return true;

@@ -123,12 +123,27 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition());
 		playerRight.SetPosition(aux.x, aux.y);
-
-		for(int i=0; i<brickList.size();i++)
-			if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i].GetRect()))
+		int collision;
+		for (int i = 0; i < brickList.size(); i++)
+		{
+			/*if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i].GetRect()))
+			{*/
+			collision = MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect());
+			if (collision != 0)
 			{
-				ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect(), ball.GetSpeed()));
-				brickList[i].SetHP(brickList[i].GetHP()-1);
+				Vector2 vel = ball.GetSpeed();
+				if (collision == 1)
+				{
+					vel.x = -vel.x;
+					ball.SetSpeed(vel);
+				}
+				else
+				{
+					vel.y = -vel.y;
+					ball.SetSpeed(vel);
+				}
+
+				brickList[i].SetHP(brickList[i].GetHP() - 1);
 
 				switch (brickList[i].GetHP())
 				{
@@ -149,12 +164,41 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 					break;
 				}
 			}
+			//}
+		}
 
-
+		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetRect());
+		if (collision != 0)
+		{
+			Vector2 vel = ball.GetSpeed();
+			if (collision == 1)
+			{
+				vel.x = -vel.x;
+				ball.SetSpeed(vel);
+			}
+			else
+			{
+				vel.y = -vel.y;
+				ball.SetSpeed(vel);
+			}
+		}
+		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetRect());
+		if (collision != 0)
+		{
+			Vector2 vel = ball.GetSpeed();
+			if (collision == 1)
+			{
+				vel.x = -vel.x;
+				ball.SetSpeed(vel);
+			}
+			else
+			{
+				vel.y = -vel.y;
+				ball.SetSpeed(vel);
+			}
+		}
 
 		ball.SetSpeed(MovingObject::Instance()->ballLimits(ball.GetPosition(), ball.GetSpeed()));
-		ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetRect(), ball.GetSpeed()));
-		ball.SetSpeed(MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetRect(), ball.GetSpeed()));
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
 
 		playerLeft.SetPuntuation((playerLeft.GetPuntuation() + 1));

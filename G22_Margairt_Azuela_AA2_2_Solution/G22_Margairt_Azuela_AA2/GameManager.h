@@ -13,7 +13,7 @@ class GameManager
 public:
 	GameManager();
 	~GameManager();
-	
+	bool endGame();
 	bool GetInput(Inputs::InputType);
 	float GetMouse(Inputs::MousePosition);
 	void SetInput(bool , Inputs::InputType );

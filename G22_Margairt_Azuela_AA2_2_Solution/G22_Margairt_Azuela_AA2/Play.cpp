@@ -98,6 +98,12 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 	}
 	else if(sceneStatus == sceneState::RUNNING)
 	{
+		if (input.GetInput(Inputs::InputType::Quit))
+		{
+			sceneStatus = sceneState::EXIT;
+			gameState = stateType::MENU;
+			input.SetInput(Inputs::InputType::Quit, false);
+		}
 		if (input.GetInput(input.W))
 		{
 			playerLeft.MoveUp();
@@ -201,7 +207,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		ball.SetSpeed(MovingObject::Instance()->ballLimits(ball.GetPosition(), ball.GetSpeed()));
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
 
-		playerLeft.SetPuntuation((playerLeft.GetPuntuation() + 1));
+		playerLeft.SetPuntuation((playerLeft.GetPuntuation()));
 		playerLeft.SetText(playerLeft.GetPuntuation());
 		Renderer::Instance()->LoadTextureText(playerLeft.GetText().font.id, playerLeft.GetText());
 		

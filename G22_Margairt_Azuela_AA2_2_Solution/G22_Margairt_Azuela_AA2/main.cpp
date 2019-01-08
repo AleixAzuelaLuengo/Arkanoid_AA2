@@ -10,8 +10,8 @@ int main(int, char*[])
 {
 	srand(time(NULL));
 	Renderer::Instance();
-	GameManager gm = GameManager();
-	while (1)
+	GameManager gm;
+	while (!gm.endGame())
 	{
 		gm.Update();
 		gm.Draw();

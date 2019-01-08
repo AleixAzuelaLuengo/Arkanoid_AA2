@@ -19,8 +19,10 @@ Brick Map::GetBrick(int position)
 
 Map::Map()
 {
+	//Variables per guardar les puntuacions maxima i minima que pot tenir cada bloc
 	int normalHP[2];
 	int hardHP[2];
+
 	rapidxml::xml_document<> doc;
 	std::ifstream file("../res/file/config.xml");
 	std::stringstream buffer;
@@ -32,6 +34,7 @@ Map::Map()
 	rapidxml::xml_node<> *pNode = pRoot->first_node("BrickInfo");
 
 	std::string name = pNode->first_node()->name();
+	//si el nom del bloc que hem llegit es el normal guardem el maxim i el minim en la variables corresponents
 	if (name == "Normal")
 	{
 		normalHP[0] = std::stoi(pNode->first_node()->first_attribute()->value());
@@ -39,6 +42,7 @@ Map::Map()
 	}
 	pNode = pNode->first_node()->next_sibling();
 	name = pNode->name();
+	//si el nom del bloc que hem llegit es el heavy guardem el maxim i el minim en la variables corresponents
 	if (name == "Heavy")
 	{
 		hardHP[0] = std::stoi(pNode->first_attribute()->value());
@@ -47,7 +51,7 @@ Map::Map()
 
 	pNode = pRoot->first_node()->next_sibling()->first_node();
 	Brick tempBrick;
-
+	//iterem sobre el pNode per recollir les dades que hem rebut anteriorment del document XML
 	for (pNode; pNode; pNode = pNode->next_sibling())
 	{
 		tempBrick.SetPosition(std::stoi(pNode->first_attribute()->value()), std::stoi(pNode->first_attribute()->next_attribute()->value()));
@@ -59,6 +63,7 @@ Map::Map()
 		if (tempBrick.GetType() == 'N') tempBrick.SetHP(1);
 		if (tempBrick.GetType() == 'H') tempBrick.SetHP(3);
 		if (tempBrick.GetType() == 'F') tempBrick.SetHP(-1);
+		//guardem el brick que hem llegit dincs del vector de bricks
 		brickList.push_back(tempBrick);
 	}
 	

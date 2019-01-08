@@ -14,6 +14,11 @@ GameManager::~GameManager()
 
 }
 
+bool GameManager::endGame()
+{
+	return false;
+}
+
 bool GameManager::GetInput(Inputs::InputType i)
 {
 	return inputs.GetInput(i);
@@ -39,7 +44,7 @@ void GameManager::SetMouse(float i, Inputs::MousePosition mouse)
 
 void GameManager::Update()
 {
-
+	//Inputs
 	while (SDL_PollEvent(&event))
 	{
 			switch (event.type) {
@@ -128,7 +133,7 @@ void GameManager::Update()
 				break;
 			}
 	}		
-	
+	//Scene Manager
 	if (currentScene->sceneStatus == currentScene->sceneState::EXIT)
 	{
 		switch (currentScene->gameState)
@@ -155,11 +160,12 @@ void GameManager::Update()
 		}
 			currentScene->sceneStatus = currentScene->sceneState::START_GAME;
 	}
-
+	//Update de la escena en la que nos encontramos
 	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 }
 
 void GameManager::Draw()
 {
+	//Draw de la escena en la que nos encontramos
 	currentScene->Draw();
 }

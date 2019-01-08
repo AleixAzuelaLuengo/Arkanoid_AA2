@@ -5,6 +5,7 @@
 #include <iostream>
 Menu::Menu()
 {	
+	//inicialitzem els MyText i el Rects per poder fer el Draw correctament
 	Renderer::Instance()->Clear();
 	BG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
 
@@ -65,6 +66,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		gameState = stateType::END;
 		input.SetInput(Inputs::InputType::Quit, false);
 	}
+	//Si el ratolí està a sobre d'un text canviarà el color
 	if (MovingObject::Instance()->MouseCollision(startGame.rect, input))
 	{
 		startGame.idColor = ButtonSelected;

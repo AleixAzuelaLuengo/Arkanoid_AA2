@@ -9,7 +9,7 @@ Play::Play()
 {
 	Renderer::Instance()->Clear();
 	PauseBG = { 0 , 0 , SCREEN_WIDTH , SCREEN_HEIGHT };
-	
+
 	pause.text = "PAUSE";
 	pause.font.size = 80;
 	pause.idColor = ButtonNotSelected;
@@ -29,26 +29,26 @@ Play::Play()
 	BG = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2);
 
-	playerLeft.SetPosition(10, SCREEN_HEIGHT / 2 -45);
-	playerLeft.SetPosHealth(SCREEN_WIDTH/10, SCREEN_HEIGHT - SCREEN_HEIGHT/10, 3);
+	playerLeft.SetPosition(10, SCREEN_HEIGHT / 2 - 45);
+	playerLeft.SetPosHealth(SCREEN_WIDTH / 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(3).position.x + playerLeft.GetHPBar(3).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(2).position.x + playerLeft.GetHPBar(2).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
-	
 
-	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2 -45);
-	playerRight.SetPosHealth(SCREEN_WIDTH - (SCREEN_WIDTH / 10)*2 -35, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
-	playerRight.SetPosHealth(playerRight.GetHPBar(3).position.x - playerRight.GetHPBar(3).proportions.x -10 , SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
+
+	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2 - 45);
+	playerRight.SetPosHealth(SCREEN_WIDTH - (SCREEN_WIDTH / 10) * 2 - 35, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
+	playerRight.SetPosHealth(playerRight.GetHPBar(3).position.x - playerRight.GetHPBar(3).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerRight.SetPosHealth(playerRight.GetHPBar(2).position.x - playerRight.GetHPBar(2).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
 
 	playerLeft.SetTextPos(SCREEN_WIDTH / 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 6 + 5);
 	playerRight.SetTextPos(SCREEN_WIDTH - (SCREEN_WIDTH / 10) * 4 - 15, SCREEN_HEIGHT - SCREEN_HEIGHT / 6 + 5);
-	
-	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x*2, playerLeft.GetRect().position.y);
+
+	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y + playerLeft.GetRect().proportions.y / 2);
 
 	int lenght = brick.GetVectorLenght();
 	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
 	for (int i = 0; i < lenght; i++) brickList[i].SetID(i);
-	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + 300, brickList[i].GetPosition('y')*BRICK_HEIGHT);
+	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + SCREEN_WIDTH / 3, brickList[i].GetPosition('y')*BRICK_HEIGHT + brickList[i].GetRect().proportions.y);
 
 	Renderer::Instance()->LoadTexture("BRICK", BRICK_SPRITESHEET);
 	Renderer::Instance()->LoadTexture("BALL", BALL_SPRITE);
@@ -71,7 +71,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		{
 			sceneStatus = sceneState::EXIT;
 			gameState = stateType::MENU;
-			input.SetInput( Inputs::InputType::Quit, false);
+			input.SetInput(Inputs::InputType::Quit, false);
 		}
 		if (input.GetInput(Inputs::InputType::SpaceBar))
 		{
@@ -96,7 +96,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			playerRight.MoveDown();
 		}
 	}
-	else if(sceneStatus == sceneState::RUNNING)
+	else if (sceneStatus == sceneState::RUNNING)
 	{
 		if (input.GetInput(Inputs::InputType::Quit))
 		{
@@ -132,85 +132,122 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		int collision;
 		for (int i = 0; i < brickList.size(); i++)
 		{
-			/*if (MovingObject::Instance()->Collision(ball.GetRect(), brickList[i].GetRect()))
-			{*/
-			collision = MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect());
-			if (collision != 0)
+			if (brickList[i].GetHP() > 0 || brickList[i].GetHP() < 0)
 			{
-				Vector2 vel = ball.GetSpeed();
-				if (collision == 1)
+				collision = MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect());
+				if (collision != 0)
 				{
-					vel.x = -vel.x;
-					ball.SetSpeed(vel);
-				}
-				else
-				{
-					vel.y = -vel.y;
-					ball.SetSpeed(vel);
-				}
+					Vector2 vel = ball.GetSpeed();
+					if (collision == 1)
+					{
+						vel.x = -2;
+						ball.SetSpeed(vel);
+					}
+					else if (collision == 2)
+					{
+						vel.x = 2;
+						ball.SetSpeed(vel);
+					}
+					else if (collision == 3)
+					{
+						vel.y = -2;
+						ball.SetSpeed(vel);
+					}
+					else if (collision == 4)
+					{
+						vel.y = +2;
+						ball.SetSpeed(vel);
+					}
 
-				brickList[i].SetHP(brickList[i].GetHP() - 1);
+					brickList[i].SetHP(brickList[i].GetHP() - 1);
 
-				switch (brickList[i].GetHP())
-				{
-				case 0:
-					//Destroy
-					break;
-				case 1:
-					//Animacio
-					break;
-				case 2:
-					//Animacio
-					break;
-				case 3:
-					//Animacio
-					break;
+					switch (brickList[i].GetHP())
+					{
+					case 0:
+						//Destroy
+						break;
+					case 1:
+						//Animacio
+						break;
+					case 2:
+						//Animacio
+						break;
+					case 3:
+						//Animacio
+						break;
 
-				default:
-					break;
+					default:
+						break;
+					}
 				}
 			}
-			//}
 		}
 
-		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetRect());
+		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetFlipedRect());
 		if (collision != 0)
 		{
 			Vector2 vel = ball.GetSpeed();
 			if (collision == 1)
 			{
-				vel.x = -vel.x;
+				vel.x = -2;
 				ball.SetSpeed(vel);
 			}
-			else
+			else if (collision == 2)
 			{
-				vel.y = -vel.y;
+				vel.x = 2;
+				ball.SetSpeed(vel);
+			}
+			else if (collision == 3)
+			{
+				vel.y = -2;
+				ball.SetSpeed(vel);
+			}
+			else if (collision == 4)
+			{
+				vel.y = +2;
 				ball.SetSpeed(vel);
 			}
 		}
-		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetRect());
+		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetFlipedRect());
 		if (collision != 0)
 		{
 			Vector2 vel = ball.GetSpeed();
 			if (collision == 1)
 			{
-				vel.x = -vel.x;
+				//std::cout << "Collision: " << collision << std::endl;
+				vel.x = -2;
 				ball.SetSpeed(vel);
 			}
-			else
+			else if (collision == 2)
 			{
-				vel.y = -vel.y;
+				//std::cout << "Collision: " << collision << std::endl;
+				vel.x = 2;
+				ball.SetSpeed(vel);
+			}
+			else if (collision == 3)
+			{
+				//std::cout << "Collision: " << collision << std::endl;
+				vel.y = -2;
+				ball.SetSpeed(vel);
+			}
+			else if (collision == 4)
+			{
+				//std::cout << "Collision: " << collision << std::endl;
+				vel.y = 2;
 				ball.SetSpeed(vel);
 			}
 		}
 
 		ball.SetSpeed(MovingObject::Instance()->ballLimits(ball.GetPosition(), ball.GetSpeed()));
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
-
+		if (ball.GetPosition().y == 239 || ball.GetPosition().y == 241)
+		{
+			std::cout << ball.GetPosition().y << std::endl;
+		}
 		playerLeft.SetPuntuation((playerLeft.GetPuntuation()));
 		playerLeft.SetText(playerLeft.GetPuntuation());
 		Renderer::Instance()->LoadTextureText(playerLeft.GetText().font.id, playerLeft.GetText());
-		
+
 	}
 	else if (sceneStatus == sceneState::PAUSED)
 	{
@@ -239,16 +276,12 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		}
 		Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
 	}
-	
+
 }
 
 void Play::Draw()
 {
-	std::vector<Brick> brickList;
-	int lenght = brick.GetVectorLenght();
-	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
-	for (int i = 0; i < lenght; i++) brickList[i].SetID(i);
-	for (int i = 0; i < lenght; i++) brickList[i].SetPosition(brickList[i].GetPosition('x')*BRICK_WIDTH + brickList[i].GetRect().proportions.x + SCREEN_WIDTH/3, brickList[i].GetPosition('y')*BRICK_HEIGHT + brickList[i].GetRect().proportions.y);
+
 	Renderer::Instance()->Render();
 	Renderer::Instance()->PushImage("BG_MENU", BG);
 	Renderer::Instance()->PushRotatedImage("PLAYER", playerLeft.GetFlipedRect(), 90);
@@ -256,7 +289,7 @@ void Play::Draw()
 	Renderer::Instance()->PushImage("BALL", ball.GetRect());
 	Renderer::Instance()->PushImage(playerLeft.GetText().font.id, playerLeft.GetText().rect);
 	Renderer::Instance()->PushImage(playerRight.GetText().font.id, playerRight.GetText().rect);
-	
+
 
 	for (int i = 0; i < brickList.size(); i++)
 	{
@@ -277,24 +310,24 @@ void Play::Draw()
 		}
 		if (brickList[i].GetType() == 'H')
 		{
-			if(brickList[i].GetHP() == 3) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+			if (brickList[i].GetHP() == 3) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
 			else if (brickList[i].GetHP() == 2) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
 			else if (brickList[i].GetHP() == 1) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_THIRD, brickList[i].GetFlipedRect(), 90);
 		}
 		if (brickList[i].GetType() == 'F')
 		{
-			if (brickList[i].GetHP()%2 != 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
-			else if (brickList[i].GetHP()%2 == 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
+			if (brickList[i].GetHP() % 2 != 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
+			else if (brickList[i].GetHP() % 2 == 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
 		}
 	}
-	
-	if(playerLeft.GetHP() >= 3)
+
+	if (playerLeft.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));
 	if (playerLeft.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(2));
 	if (playerLeft.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(1));
-	
+
 	if (playerRight.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(3));
 	if (playerRight.GetHP() >= 2)
@@ -308,5 +341,5 @@ void Play::Draw()
 		Renderer::Instance()->PushImage(pause.font.id, pause.rect);
 		Renderer::Instance()->PushImage(soundOnSwitch.font.id, soundOnSwitch.rect);
 	}
-	
+
 }

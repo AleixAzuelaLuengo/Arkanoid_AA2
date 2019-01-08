@@ -24,7 +24,7 @@ Map::Map()
 	int hardHP[2];
 
 	rapidxml::xml_document<> doc;
-	std::ifstream file("../res/file/config.xml");
+	std::ifstream file("../../res/files/config.xml");
 	std::stringstream buffer;
 	buffer << file.rdbuf();
 	file.close();

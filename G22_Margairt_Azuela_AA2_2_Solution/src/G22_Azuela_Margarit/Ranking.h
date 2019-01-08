@@ -15,7 +15,7 @@ public:
 	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
 	void Draw();
 	void ReadFile(char *a, int puntuation);
-	
+	void Sort(std::vector<std::pair<char*, int>> &a);
 private:
 	std::vector<std::pair<char *, int>> rankingList;
 	char ReadChar(char *, int lenght);

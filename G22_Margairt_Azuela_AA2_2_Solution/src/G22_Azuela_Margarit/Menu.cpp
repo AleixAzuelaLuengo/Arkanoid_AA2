@@ -87,7 +87,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		if (input.GetInput(Inputs::LeftClick))
 		{
 			sceneStatus = sceneState::EXIT;
-			gameState = stateType::MENU;
+			gameState = stateType::RANKING;
 		}
 	}
 	else

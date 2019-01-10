@@ -34,7 +34,7 @@ Play::Play()
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(3).position.x + playerLeft.GetHPBar(3).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(2).position.x + playerLeft.GetHPBar(2).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
 
-
+	
 	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2 - 45);
 	playerRight.SetPosHealth(SCREEN_WIDTH - (SCREEN_WIDTH / 10) * 2 - 35, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
 	playerRight.SetPosHealth(playerRight.GetHPBar(3).position.x - playerRight.GetHPBar(3).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
@@ -161,24 +161,6 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 					brickList[i].SetHP(brickList[i].GetHP() - 1);
 
-					switch (brickList[i].GetHP())
-					{
-					case 0:
-						//Destroy
-						break;
-					case 1:
-						//Animacio
-						break;
-					case 2:
-						//Animacio
-						break;
-					case 3:
-						//Animacio
-						break;
-
-					default:
-						break;
-					}
 				}
 			}
 		}
@@ -277,6 +259,15 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
 	}
 
+	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
+	{
+		char* name;
+		std::cout << "Instert a Username" << std::endl;
+		std::cin >> name;
+		if (playerLeft.GetHP() == 0) ran.setNewPlayer(name, playerRight.GetPuntuation());
+		if(playerRight.GetHP() == 0) ran.setNewPlayer(name, playerLeft.GetPuntuation());
+		ran.Update(input, sceneStatus, gameState);
+	}
 }
 
 void Play::Draw()
@@ -323,16 +314,16 @@ void Play::Draw()
 
 	if (playerLeft.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));
-	if (playerLeft.GetHP() >= 2)
+	else if (playerLeft.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(2));
-	if (playerLeft.GetHP() >= 1)
+	else if (playerLeft.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(1));
 
 	if (playerRight.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(3));
-	if (playerRight.GetHP() >= 2)
+	else if (playerRight.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(2));
-	if (playerRight.GetHP() >= 1)
+	else if (playerRight.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(1));
 
 	if (sceneStatus == sceneState::PAUSED)

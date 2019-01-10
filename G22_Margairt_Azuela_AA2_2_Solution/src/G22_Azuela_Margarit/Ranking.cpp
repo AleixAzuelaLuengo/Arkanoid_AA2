@@ -4,8 +4,7 @@
 
 Ranking::Ranking()
 {
-	char a[4] = "VRL";
-	ReadFile(a, 600);
+	
 }
 
 
@@ -16,14 +15,21 @@ Ranking::~Ranking()
 
 void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
-	
+	ReadFile();
 }
 
 void Ranking::Draw()
 {
+
 }
 
-void Ranking::ReadFile(char *name, int score)
+void Ranking::setNewPlayer(char * name, int points)
+{
+	newPlayer.first = name;
+	newPlayer.second = points;
+}
+
+void Ranking::ReadFile()
 {
 	std::vector<std::pair<char *, int>> rankingList;
 	std::vector<std::pair<char *, int>> readRankingList;
@@ -42,8 +48,8 @@ void Ranking::ReadFile(char *name, int score)
 	}
 	myFileIn.close();
 
-	temp.first = name;
-	temp.second = score;
+	temp.first = newPlayer.first;
+	temp.second = newPlayer.second;
 	rankingList.push_back(temp);
 	
 	Sort(rankingList);

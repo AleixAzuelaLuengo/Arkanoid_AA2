@@ -23,5 +23,6 @@ private:
 	enum SceneType { SPLASHSCREEN, MENU, PLAY, RANKING, END };
 	SceneType actualScene;
 	SceneState state;*/
+
 };
 

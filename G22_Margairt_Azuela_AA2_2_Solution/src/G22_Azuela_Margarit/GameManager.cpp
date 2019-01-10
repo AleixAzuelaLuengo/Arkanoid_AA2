@@ -136,7 +136,7 @@ void GameManager::Update()
 	//Scene Manager
 	if (currentScene->sceneStatus == currentScene->sceneState::EXIT)
 	{
-		switch (currentScene->next)
+		switch (currentScene->gameState)
 		{
 		case Scene::stateType::SPLASHSCREEN:
 			currentScene = new Splashscreen();
@@ -161,7 +161,7 @@ void GameManager::Update()
 			currentScene->sceneStatus = currentScene->sceneState::START_GAME;
 	}
 	//Update de la escena en la que nos encontramos
-	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->lastGameState);
+	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 }
 
 void GameManager::Draw()

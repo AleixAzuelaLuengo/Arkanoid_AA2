@@ -261,7 +261,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
 	{
-		char* name;
+		char* name = nullptr;
 		std::cout << "Instert a Username" << std::endl;
 		std::cin >> name;
 		if (playerLeft.GetHP() == 0) ran.setNewPlayer(name, playerRight.GetPuntuation());
@@ -333,4 +333,9 @@ void Play::Draw()
 		Renderer::Instance()->PushImage(soundOnSwitch.font.id, soundOnSwitch.rect);
 	}
 
+
+	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
+	{
+		ran.Draw();
+	}
 }

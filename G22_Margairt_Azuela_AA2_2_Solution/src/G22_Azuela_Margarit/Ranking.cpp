@@ -1,10 +1,10 @@
 #include "Ranking.h"
-
+#include <iostream>
 
 
 Ranking::Ranking()
 {
-	
+	ReadFile();
 }
 
 
@@ -15,7 +15,7 @@ Ranking::~Ranking()
 
 void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
-	ReadFile();
+	
 }
 
 void Ranking::Draw()
@@ -58,12 +58,14 @@ void Ranking::ReadFile()
 	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
 	for (int i = 0; i < rankingList.size(); i++)
 	{
+		std::cout << rankingList[i].first << " : " << rankingList[i].second << std::endl;
 		char *a = rankingList[i].first;
 		int b = rankingList[i].second;
 		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
 		myFile.write(reinterpret_cast<const char*> (&b), sizeof(int));
 	}
 	myFile.close();
+
 }
 
 void Ranking::Sort(std::vector<std::pair<char*, int>> &a)

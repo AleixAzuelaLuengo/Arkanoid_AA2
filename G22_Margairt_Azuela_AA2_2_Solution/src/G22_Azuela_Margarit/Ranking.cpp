@@ -1,11 +1,10 @@
 #include "Ranking.h"
-
+#include <iostream>
 
 
 Ranking::Ranking()
 {
-	char a[4] = "VRL";
-	ReadFile(a, 600);
+	ReadFile();
 }
 
 
@@ -21,9 +20,16 @@ void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameStat
 
 void Ranking::Draw()
 {
+
 }
 
-void Ranking::ReadFile(char *name, int score)
+void Ranking::setNewPlayer(char * name, int points)
+{
+	newPlayer.first = name;
+	newPlayer.second = points;
+}
+
+void Ranking::ReadFile()
 {
 	std::vector<std::pair<char *, int>> rankingList;
 	std::vector<std::pair<char *, int>> readRankingList;
@@ -42,8 +48,8 @@ void Ranking::ReadFile(char *name, int score)
 	}
 	myFileIn.close();
 
-	temp.first = name;
-	temp.second = score;
+	temp.first = newPlayer.first;
+	temp.second = newPlayer.second;
 	rankingList.push_back(temp);
 	
 	Sort(rankingList);
@@ -52,12 +58,14 @@ void Ranking::ReadFile(char *name, int score)
 	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
 	for (int i = 0; i < rankingList.size(); i++)
 	{
+		std::cout << rankingList[i].first << " : " << rankingList[i].second << std::endl;
 		char *a = rankingList[i].first;
 		int b = rankingList[i].second;
 		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
 		myFile.write(reinterpret_cast<const char*> (&b), sizeof(int));
 	}
 	myFile.close();
+
 }
 
 void Ranking::Sort(std::vector<std::pair<char*, int>> &a)

@@ -188,24 +188,6 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 					brickList[i].SetHP(brickList[i].GetHP() - 1);
 
-					switch (brickList[i].GetHP())
-					{
-					case 0:
-						//Destroy
-						break;
-					case 1:
-						//Animacio
-						break;
-					case 2:
-						//Animacio
-						break;
-					case 3:
-						//Animacio
-						break;
-
-					default:
-						break;
-					}
 				}
 			}
 		}
@@ -340,6 +322,15 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		}
 	}
 
+	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
+	{
+		char* name = nullptr;
+		std::cout << "Instert a Username" << std::endl;
+		std::cin >> name;
+		if (playerLeft.GetHP() == 0) ran.setNewPlayer(name, playerRight.GetPuntuation());
+		if(playerRight.GetHP() == 0) ran.setNewPlayer(name, playerLeft.GetPuntuation());
+		ran.Update(input, sceneStatus, gameState);
+	}
 }
 
 void Play::Draw()
@@ -386,16 +377,16 @@ void Play::Draw()
 
 	if (playerLeft.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));
-	if (playerLeft.GetHP() >= 2)
+	else if (playerLeft.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(2));
-	if (playerLeft.GetHP() >= 1)
+	else if (playerLeft.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(1));
 
 	if (playerRight.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(3));
-	if (playerRight.GetHP() >= 2)
+	else if (playerRight.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(2));
-	if (playerRight.GetHP() >= 1)
+	else if (playerRight.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(1));
 
 	if (sceneStatus == sceneState::PAUSED)
@@ -405,4 +396,9 @@ void Play::Draw()
 		Renderer::Instance()->PushImage(soundOnSwitch.font.id, soundOnSwitch.rect);
 	}
 
+
+	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
+	{
+		ran.Draw();
+	}
 }

@@ -11,14 +11,14 @@ class Ranking: public Scene
 public:
 	Ranking();
 	~Ranking();
-	void checkIfInRanking(int);
-	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState );
 	void Draw();
-	void ReadFile(char *a, int puntuation);
-	void Sort(std::vector<std::pair<char*, int>> &a);
+	void setNewPlayer(char *, int);
 private:
 	std::vector<std::pair<char *, int>> rankingList;
-	char ReadChar(char *, int lenght);
+	std::pair<char*, int> newPlayer;
+	void ReadFile();
+	void Sort(std::vector<std::pair<char*, int>> &a);
 protected:
 	
 };

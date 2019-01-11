@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Ball.h"
 #include "Types.h"
+#include "Ranking.h"
 #include "Map.h"
 #include "Scene.h"
 
@@ -19,6 +20,7 @@ private:
 	Player playerRight;
 	Ball ball;
 	Map brick;
+	Ranking ran;
 	//Brick *brickList[][];
 	SDL_Event event;
 	MyText pause;

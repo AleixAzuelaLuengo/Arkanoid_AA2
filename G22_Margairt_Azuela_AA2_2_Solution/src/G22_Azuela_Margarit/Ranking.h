@@ -18,7 +18,8 @@ private:
 	std::vector<std::pair<char *, int>> rankingList;
 	std::pair<char*, int> newPlayer;
 	void ReadFile();
-	void Sort(std::vector<std::pair<char*, int>> &a);
+	void Sort(std::vector<std::pair<char *, int>> &a);
+	MyText ranking[10];
 protected:
 	
 };

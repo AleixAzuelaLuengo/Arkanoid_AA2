@@ -264,9 +264,10 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		char* name = nullptr;
 		std::cout << "Instert a Username" << std::endl;
 		std::cin >> name;
-		if (playerLeft.GetHP() == 0) ran.setNewPlayer(name, playerRight.GetPuntuation());
-		if(playerRight.GetHP() == 0) ran.setNewPlayer(name, playerLeft.GetPuntuation());
-		ran.Update(input, sceneStatus, gameState);
+		newPlayer.first = name;
+		if (playerLeft.GetHP() == 0) newPlayer.second = playerRight.GetPuntuation();
+		if(playerRight.GetHP() == 0) newPlayer.second =  playerLeft.GetPuntuation();
+
 	}
 }
 
@@ -333,9 +334,60 @@ void Play::Draw()
 		Renderer::Instance()->PushImage(soundOnSwitch.font.id, soundOnSwitch.rect);
 	}
 
+}
 
-	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
+void Play::ReadFile()
+{
+	std::vector<std::pair<char *, int>> temp;
+	std::ifstream myFileIn("../../res/files/ranking.bin", std::ios::in | std::ios::binary);
+
+	for (int i = 0; i < 10; i++)
 	{
-		ran.Draw();
+		std::pair<char *, int> temp2;
+		char a[4];
+		myFileIn.read(reinterpret_cast<char*> (&a), sizeof(char) * 4);
+		myFileIn.read(reinterpret_cast<char*> (&temp2.second), sizeof(int));
+		temp2.first = a;
+		temp.push_back(temp2);
 	}
+	myFileIn.close();
+	temp.push_back(newPlayer);
+	Sort(temp);
+	temp.pop_back();
+
+	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
+	for (int i = 0; i < temp.size(); i++)
+	{
+		std::cout << temp[i].first << " : " << temp[i].second << std::endl;
+		char *a = temp[i].first;
+		int b = temp[i].second;
+		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
+		myFile.write(reinterpret_cast<const char*> (&b), sizeof(int));
+	}
+	myFile.close();
+
+	/*char x[4] = "VRL";
+	char *a = x;
+	int b = 200;
+
+	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
+	for (int i = 0; i < 10; i++)
+	{
+		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
+		myFile.write(reinterpret_cast<char*> (&b), sizeof(b));
+	}
+	myFile.close(); */
+
+}
+
+void Play::Sort(std::vector<std::pair<char*, int>> &a)
+{
+	for (int i = 0; i < a.size(); i++)
+		for (int j = 0; j < a.size() - i - 1; j++)
+			if (a[j + 1].second > a[j].second)
+			{
+				std::pair<char*, int> temp = a[j];
+				a[j] = a[j + 1];
+				a[j + 1] = temp;
+			}
 }

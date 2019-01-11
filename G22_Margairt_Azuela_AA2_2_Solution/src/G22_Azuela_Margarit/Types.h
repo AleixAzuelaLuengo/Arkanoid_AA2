@@ -38,8 +38,6 @@ struct MyText
 	MyColor idColor;
 	Font font;
 	Rect rect;
-
-
 };
 
 

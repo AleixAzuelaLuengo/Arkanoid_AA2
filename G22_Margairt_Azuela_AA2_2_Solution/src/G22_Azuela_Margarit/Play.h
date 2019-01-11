@@ -20,12 +20,13 @@ private:
 	Player playerRight;
 	Ball ball;
 	Map brick;
-	Ranking ran;
 	//Brick *brickList[][];
 	SDL_Event event;
 	MyText pause;
 	MyText soundOnSwitch;
 	std::vector<Brick> brickList;
-
+	std::pair<char *, int> newPlayer;
+	void Sort(std::vector<std::pair<char*, int>> &a);
+	void ReadFile();
 };
 

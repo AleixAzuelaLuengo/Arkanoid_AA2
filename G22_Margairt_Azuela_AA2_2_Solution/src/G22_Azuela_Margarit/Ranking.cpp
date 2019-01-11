@@ -1,10 +1,26 @@
 #include "Ranking.h"
+#include "Renderer.h"
 #include <iostream>
-
+#include <string>
 
 Ranking::Ranking()
 {
+	
 	ReadFile();
+	for (int i = 0; i < rankingList.size(); i++)
+	{
+		//char *temp(*rankingList[i].first)); //+ ' ' + std::to_string(rankingList[i].second) ;
+		ranking[i].text = "VRL  " + std::to_string(rankingList[i].second);
+		ranking[i].idColor = White;
+		ranking[i].font.id = "ARKANOID_FONT";
+		ranking[i].font.path = MENU_FONT;
+		ranking[i].font.size = 20;
+		ranking[i].rect.proportions = { 300, 40 };
+		ranking[i].rect.position.x = SCREEN_WIDTH / 2 - ranking[i].rect.proportions.x/2;
+		ranking[i].rect.position.y = ranking[i].rect.proportions.y + i * ranking[i].rect.proportions.y;
+	}
+	for (int i = 0; i < rankingList.size(); i++) Renderer::Instance()->LoadTextureText(ranking[i].font.id, ranking[i]);
+
 }
 
 
@@ -15,12 +31,20 @@ Ranking::~Ranking()
 
 void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 {
-	
+	if (input.GetInput(Inputs::InputType::Quit))
+	{
+		sceneStatus = sceneState::EXIT;
+		gameState = stateType::MENU;
+		input.SetInput(Inputs::InputType::Quit, false);
+	}
 }
 
 void Ranking::Draw()
 {
-
+	Renderer::Instance()->Render();
+	Renderer::Instance()->PushImage("BG_MENU", { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT });
+	for (int i = 0; i < 10; i++) Renderer::Instance()->PushImage(ranking[i].font.id, ranking[i].rect);
+	
 }
 
 void Ranking::setNewPlayer(char * name, int points)
@@ -31,10 +55,7 @@ void Ranking::setNewPlayer(char * name, int points)
 
 void Ranking::ReadFile()
 {
-	std::vector<std::pair<char *, int>> rankingList;
-	std::vector<std::pair<char *, int>> readRankingList;
 	std::pair<char *, int> temp;
-
 	std::ifstream myFileIn("../../res/files/ranking.bin", std::ios::in | std::ios::binary);
 
 	for (int i = 0; i < 10; i++)
@@ -65,6 +86,18 @@ void Ranking::ReadFile()
 		myFile.write(reinterpret_cast<const char*> (&b), sizeof(int));
 	}
 	myFile.close();
+
+	/*char x[4] = "VRL";
+	char *a = x;
+	int b = 200;
+
+	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
+	for (int i = 0; i < 10; i++)
+	{
+		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
+		myFile.write(reinterpret_cast<char*> (&b), sizeof(b));
+	}
+	myFile.close(); */
 
 }
 

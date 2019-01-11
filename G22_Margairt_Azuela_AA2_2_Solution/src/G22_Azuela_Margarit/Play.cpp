@@ -29,13 +29,13 @@ Play::Play()
 	BG = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
 	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2);
 
-	playerLeft.SetPosition(10, SCREEN_HEIGHT / 2 - 45);
+	playerLeft.SetPosition(26, SCREEN_HEIGHT / 2 - 45);
 	playerLeft.SetPosHealth(SCREEN_WIDTH / 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(3).position.x + playerLeft.GetHPBar(3).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerLeft.SetPosHealth(playerLeft.GetHPBar(2).position.x + playerLeft.GetHPBar(2).proportions.x + 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
 
-	
-	playerRight.SetPosition(SCREEN_WIDTH - SCREEN_WIDTH / 11, SCREEN_HEIGHT / 2 - 45);
+
+	playerRight.SetPosition(SCREEN_WIDTH - 29 - playerRight.GetRect().proportions.x, SCREEN_HEIGHT / 2 - 45);
 	playerRight.SetPosHealth(SCREEN_WIDTH - (SCREEN_WIDTH / 10) * 2 - 35, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 3);
 	playerRight.SetPosHealth(playerRight.GetHPBar(3).position.x - playerRight.GetHPBar(3).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 2);
 	playerRight.SetPosHealth(playerRight.GetHPBar(2).position.x - playerRight.GetHPBar(2).proportions.x - 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 10, 1);
@@ -43,7 +43,9 @@ Play::Play()
 	playerLeft.SetTextPos(SCREEN_WIDTH / 10, SCREEN_HEIGHT - SCREEN_HEIGHT / 6 + 5);
 	playerRight.SetTextPos(SCREEN_WIDTH - (SCREEN_WIDTH / 10) * 4 - 15, SCREEN_HEIGHT - SCREEN_HEIGHT / 6 + 5);
 
-	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y + playerLeft.GetRect().proportions.y / 2);
+	ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y + playerLeft.GetRect().proportions.y / 2 -ball.GetRect().proportions.y/2);
+	lastPlayer = 0;
+	spawnPlayer = 0;
 
 	int lenght = brick.GetVectorLenght();
 	for (int i = 0; i < lenght; i++) brickList.push_back(brick.GetBrick(i));
@@ -56,6 +58,8 @@ Play::Play()
 	Renderer::Instance()->LoadTextureText(pause.font.id, pause);
 	Renderer::Instance()->LoadFont(soundOnSwitch.font);
 	Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
+
+	gameOver = false;
 }
 
 
@@ -76,27 +80,49 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		if (input.GetInput(Inputs::InputType::SpaceBar))
 		{
 			sceneStatus = sceneState::RUNNING;
+			if (spawnPlayer == 0)
+			{
+				int y = rand() % 2;
+				if (y == 0)
+					ball.SetSpeed(Vector2{ 2, 2 });
+				else
+					ball.SetSpeed(Vector2{ 2, -2 });
+			}
+			if (spawnPlayer == 1)
+			{
+				int y = rand() % 2;
+				if (y == 0)
+					ball.SetSpeed(Vector2{ -2, 2 });
+				else
+					ball.SetSpeed(Vector2{ -2, -2 });
+			}
 		}
 		if (input.GetInput(input.W))
 		{
 			playerLeft.MoveUp();
-			ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y);
+			if(spawnPlayer ==0)
+				ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y + playerLeft.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
 		}
 		else if (input.GetInput(input.S))
 		{
 			playerLeft.MoveDown();
-			ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y);
+			if (spawnPlayer == 0)
+				ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y + playerLeft.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
 		}
 		if (input.GetInput(input.UpArrow))
 		{
 			playerRight.MoveUp();
+			if(spawnPlayer ==1)
+				ball.SetPosition(playerRight.GetRect().position.x - playerRight.GetRect().proportions.x * 2, playerRight.GetRect().position.y + playerRight.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
 		}
 		else if (input.GetInput(input.DownArrow))
 		{
 			playerRight.MoveDown();
+			if (spawnPlayer == 1)
+				ball.SetPosition(playerRight.GetRect().position.x - playerRight.GetRect().proportions.x * 2, playerRight.GetRect().position.y + playerRight.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
 		}
 	}
-	else if (sceneStatus == sceneState::RUNNING)
+	else if (sceneStatus == sceneState::RUNNING && !gameOver)
 	{
 		if (input.GetInput(Inputs::InputType::Quit))
 		{
@@ -126,6 +152,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		}
 		Vector2 aux = MovingObject::Instance()->playerLimits(playerLeft.GetPosition());
 		playerLeft.SetPosition(aux.x, aux.y);
+		
 
 		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition());
 		playerRight.SetPosition(aux.x, aux.y);
@@ -134,7 +161,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		{
 			if (brickList[i].GetHP() > 0 || brickList[i].GetHP() < 0)
 			{
-				collision = MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect());
+				collision = MovingObject::Instance()->BallBounce(ball.GetRect(), brickList[i].GetRect(), ball.GetSpeed());
 				if (collision != 0)
 				{
 					Vector2 vel = ball.GetSpeed();
@@ -165,7 +192,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			}
 		}
 
-		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetFlipedRect());
+		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetRect(), ball.GetSpeed());
 		if (collision != 0)
 		{
 			Vector2 vel = ball.GetSpeed();
@@ -189,38 +216,54 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 				vel.y = +2;
 				ball.SetSpeed(vel);
 			}
+			lastPlayer = 0;
 		}
-		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetFlipedRect());
+		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerRight.GetRect(), ball.GetSpeed());
 		if (collision != 0)
 		{
 			Vector2 vel = ball.GetSpeed();
 			if (collision == 1)
 			{
-				//std::cout << "Collision: " << collision << std::endl;
 				vel.x = -2;
 				ball.SetSpeed(vel);
 			}
 			else if (collision == 2)
 			{
-				//std::cout << "Collision: " << collision << std::endl;
 				vel.x = 2;
 				ball.SetSpeed(vel);
 			}
 			else if (collision == 3)
 			{
-				//std::cout << "Collision: " << collision << std::endl;
 				vel.y = -2;
 				ball.SetSpeed(vel);
 			}
 			else if (collision == 4)
 			{
-				//std::cout << "Collision: " << collision << std::endl;
 				vel.y = 2;
 				ball.SetSpeed(vel);
 			}
+			lastPlayer = 1;
 		}
 
+
 		ball.SetSpeed(MovingObject::Instance()->ballLimits(ball.GetPosition(), ball.GetSpeed()));
+		if (ball.GetSpeed().x == 0)
+		{
+			ball.SetSpeed(Vector2{ 0,0 });
+			ball.SetPosition(playerLeft.GetRect().position.x + playerLeft.GetRect().proportions.x * 2, playerLeft.GetRect().position.y + playerLeft.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
+			sceneStatus = sceneState::START_GAME;
+			spawnPlayer = 0;
+			playerLeft.SetHp(playerLeft.GetHP()-1);
+			
+		}
+		else if (ball.GetSpeed().x == 1)
+		{
+			ball.SetSpeed(Vector2{ 0,0 });
+			ball.SetPosition(playerRight.GetRect().position.x - playerRight.GetRect().proportions.x * 2, playerRight.GetRect().position.y + playerRight.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
+			sceneStatus = sceneState::START_GAME;
+			spawnPlayer = 1;
+			playerRight.SetHp(playerRight.GetHP() - 1);
+		}
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
 		if (ball.GetPosition().y == 239 || ball.GetPosition().y == 241)
 		{
@@ -230,6 +273,10 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		playerLeft.SetText(playerLeft.GetPuntuation());
 		Renderer::Instance()->LoadTextureText(playerLeft.GetText().font.id, playerLeft.GetText());
 
+		if (playerLeft.GetHP() <= 0 || playerRight.GetHP() <= 0)
+		{
+			gameOver = true;
+		}
 	}
 	else if (sceneStatus == sceneState::PAUSED)
 	{
@@ -257,6 +304,22 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			soundOnSwitch.idColor = ButtonNotSelected;
 		}
 		Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
+
+	}
+	else if (gameOver)
+	{
+		if (playerLeft.GetHP() <= 0)
+		{
+			std::cout << "Player2 wins! Put your name: ";
+			std::string nom;
+			std::cin >> nom;
+		}
+		else
+		{
+				std::cout << "Player1 wins! Put your name: ";
+				std::string nom;
+				std::cin >> nom;
+		}
 	}
 
 	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)

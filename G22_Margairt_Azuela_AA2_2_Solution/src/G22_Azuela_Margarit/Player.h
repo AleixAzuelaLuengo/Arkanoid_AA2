@@ -10,6 +10,7 @@ public:
 	void SetSpeed(int);
 	int GetSpeed();
 	Rect GetFlipedRect();
+	Rect GetImageFlippedRect();
 	void SetPosition(int x, int y );
 	int GetHP();
 	void SetHp(int);

@@ -97,5 +97,5 @@ char Brick::GetType()
 
 Rect Brick::GetFlipedRect()
 {
-	return Rect{ brickRect.position.x, brickRect.position.y, brickRect.proportions.y, brickRect.proportions.x };
+	return Rect{ brickRect.position.x - brickRect.proportions.x , brickRect.position.y , brickRect.proportions.y, brickRect.proportions.x };
 }

@@ -45,8 +45,9 @@ int Player::GetSpeed()
 
 Rect Player::GetFlipedRect()
 {
-	return Rect{ PlayerRect.position.x, PlayerRect.position.y, PlayerRect.proportions.y, PlayerRect.proportions.x };
+	return Rect{PlayerRect.position.x -PlayerRect.proportions.x , PlayerRect.position.y +PlayerRect.proportions.y/3, PlayerRect.proportions.y, PlayerRect.proportions.x };
 }
+
 
 void Player::SetPosition(int newX, int newY)
 {

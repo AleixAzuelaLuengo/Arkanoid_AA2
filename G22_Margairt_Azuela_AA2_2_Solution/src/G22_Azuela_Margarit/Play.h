@@ -28,5 +28,8 @@ private:
 	std::pair<char *, int> newPlayer;
 	void Sort(std::vector<std::pair<char*, int>> &a);
 	void ReadFile();
+	int lastPlayer;
+	int spawnPlayer;
+	bool gameOver;
 };
 

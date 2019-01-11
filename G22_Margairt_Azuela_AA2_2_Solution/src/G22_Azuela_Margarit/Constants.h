@@ -16,6 +16,7 @@ const std::string POWER_UP_SPRITE = "../../res/img/PowerUp.jpg";
 const MyColor ButtonNotSelected = { 0 , 255 , 250 , 255 }; 
 const MyColor Black = { 0, 0, 0, 255 };
 const MyColor Red = { 255, 0, 0, 255 };
+const MyColor White = { 255, 255, 255, 255 };
 const MyColor ButtonSelected = { 0, 130, 250, 255 };
 const int PLAYER_WIDTH = 20;
 const int PLAYER_HEIGHT = 60;

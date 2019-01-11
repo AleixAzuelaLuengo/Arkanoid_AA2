@@ -5,6 +5,7 @@
 #include "Ranking.h"
 #include "Map.h"
 #include "Scene.h"
+#include "PowerUp.h"
 
 class Play: public Scene
 {
@@ -26,6 +27,7 @@ private:
 	MyText pause;
 	MyText soundOnSwitch;
 	std::vector<Brick> brickList;
+	std::vector<PowerUp*> powerUpList;
 	int lastPlayer;
 	int spawnPlayer;
 	bool gameOver;

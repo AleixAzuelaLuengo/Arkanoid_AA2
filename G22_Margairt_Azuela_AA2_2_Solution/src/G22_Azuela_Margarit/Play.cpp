@@ -3,6 +3,7 @@
 #include "Renderer.h"
 #include "MovingObject.h"
 #include <iostream>
+#include "PowerUp.h"
 
 
 Play::Play()
@@ -54,6 +55,7 @@ Play::Play()
 
 	Renderer::Instance()->LoadTexture("BRICK", BRICK_SPRITESHEET);
 	Renderer::Instance()->LoadTexture("BALL", BALL_SPRITE);
+	Renderer::Instance()->LoadTexture("POWERUP", POWER_UP_SPRITE);
 	Renderer::Instance()->LoadFont(pause.font);
 	Renderer::Instance()->LoadTextureText(pause.font.id, pause);
 	Renderer::Instance()->LoadFont(soundOnSwitch.font);
@@ -187,6 +189,35 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 					}
 
 					brickList[i].SetHP(brickList[i].GetHP() - 1);
+					if (brickList[i].GetHP() == 0)
+					{
+						int num = rand() % 100;
+						if (num <= 19)
+						{
+							PowerUp* powerUp = new PowerUp();
+							if (lastPlayer == 0)
+								powerUp->SetSpeed(-1);
+							else powerUp->SetSpeed(1);
+
+							powerUp->SetPosition(brickList[i].GetRect().position.x, brickList[i].GetRect().position.y + brickList[i].GetRect().proportions.y/2);
+							int type = rand() % 3;
+							switch (type)
+							{
+							case 0:
+								powerUp->SetPowerUpType(powerUpType::EXTRA_LENGTH);
+								break;
+							case 1: 
+								powerUp->SetPowerUpType(powerUpType::MINI_LENGTH);
+								break;
+							case 2:
+								powerUp->SetPowerUpType(powerUpType::SPEED);
+								break;
+									
+							}
+							
+							powerUpList.push_back(powerUp);
+						}
+					}
 
 				}
 			}
@@ -265,13 +296,59 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			playerRight.SetHp(playerRight.GetHP() - 1);
 		}
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
-		if (ball.GetPosition().y == 239 || ball.GetPosition().y == 241)
-		{
-			std::cout << ball.GetPosition().y << std::endl;
-		}
+
 		playerLeft.SetPuntuation((playerLeft.GetPuntuation()));
 		playerLeft.SetText(playerLeft.GetPuntuation());
 		Renderer::Instance()->LoadTextureText(playerLeft.GetText().font.id, playerLeft.GetText());
+
+		for (int i = 0; i < powerUpList.size(); i++)
+		{
+			if (MovingObject::Instance()->Collision(playerLeft.GetRect(), powerUpList[i]->GetRect()))
+			{
+				switch (powerUpList[i]->GetType())
+				{
+				case 0:
+					playerLeft.SetProportions(playerLeft.GetRect().proportions.x, (int)(playerLeft.GetRect().proportions.y + (playerLeft.GetRect().proportions.y * 0.25f)));
+					break;
+				case 1:
+					playerLeft.SetProportions(playerLeft.GetRect().proportions.x, (int)(playerLeft.GetRect().proportions.y - (playerLeft.GetRect().proportions.y * 0.25f)));
+					break;
+				case 2:
+					playerLeft.SetSpeed((int)(round(playerLeft.GetSpeed() + (playerLeft.GetSpeed() * 0.2f))));
+					break;
+				default:
+					break;
+				}
+
+				powerUpList.erase(powerUpList.begin() + i);
+			}
+			else if (MovingObject::Instance()->Collision(playerRight.GetRect(), powerUpList[i]->GetRect()))
+			{
+				switch (powerUpList[i]->GetType())
+				{
+				case 0:
+					playerRight.SetProportions(playerRight.GetRect().proportions.x, (int)(playerRight.GetRect().proportions.y + (playerRight.GetRect().proportions.y * 0.25f)));
+					break;
+				case 1:
+					playerRight.SetProportions(playerRight.GetRect().proportions.x, (int)(playerRight.GetRect().proportions.y - (playerRight.GetRect().proportions.y * 0.25f)));
+					break;
+				case 2:
+					playerRight.SetSpeed((int)(round(playerRight.GetSpeed() + (playerRight.GetSpeed() * 0.2f))));
+					break;
+				default:
+					break;
+				}
+
+				powerUpList.erase(powerUpList.begin() + i);
+			}
+		}
+		
+
+
+		for (int i = 0; i < powerUpList.size(); i++)
+		{
+			powerUpList[i]->SetPosition(powerUpList[i]->GetPosition().x + powerUpList[i]->GetSpeed(), powerUpList[i]->GetPosition().y);
+		}
 
 		if (playerLeft.GetHP() <= 0 || playerRight.GetHP() <= 0)
 		{
@@ -329,7 +406,9 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		std::cin >> name;
 		if (playerLeft.GetHP() == 0) ran.setNewPlayer(name, playerRight.GetPuntuation());
 		if(playerRight.GetHP() == 0) ran.setNewPlayer(name, playerLeft.GetPuntuation());
-		ran.Update(input, sceneStatus, gameState);
+		
+		
+		Update(input, sceneStatus, gameState);
 	}
 }
 
@@ -355,6 +434,7 @@ void Play::Draw()
 			if (sec <= 300 && sec >= 250 && brickList[i].GetHP() == 0)
 			{
 				Renderer::Instance()->PushRotatedSprite("BRICK", GREENBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
+		
 			}
 			else if (sec <= 600 && sec >= 500 && brickList[i].GetHP() == 0)
 			{
@@ -362,31 +442,48 @@ void Play::Draw()
 				brickList[i].SetHP(-1);
 			}
 		}
-		if (brickList[i].GetType() == 'H')
+		else if (brickList[i].GetType() == 'H')
 		{
 			if (brickList[i].GetHP() == 3) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
 			else if (brickList[i].GetHP() == 2) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
 			else if (brickList[i].GetHP() == 1) Renderer::Instance()->PushRotatedSprite("BRICK", REDBLOCK_THIRD, brickList[i].GetFlipedRect(), 90);
 		}
-		if (brickList[i].GetType() == 'F')
+		else if (brickList[i].GetType() == 'F')
 		{
 			if (brickList[i].GetHP() % 2 != 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_FIRST, brickList[i].GetFlipedRect(), 90);
 			else if (brickList[i].GetHP() % 2 == 0) Renderer::Instance()->PushRotatedSprite("BRICK", FIXEDBLOCK_SECOND, brickList[i].GetFlipedRect(), 90);
 		}
 	}
 
+	for (int i = 0; i < powerUpList.size(); i++)
+	{
+		if (powerUpList[i]->GetType() == powerUpType::EXTRA_LENGTH)
+		{
+			Renderer::Instance()->PushSprite("POWERUP", POWER_UP_EXTRA, powerUpList[i]->GetRect());
+		}
+		else if (powerUpList[i]->GetType() == powerUpType::MINI_LENGTH)
+		{
+			Renderer::Instance()->PushSprite("POWERUP", POWER_UP_MINI, powerUpList[i]->GetRect());
+		}
+		else if (powerUpList[i]->GetType() == powerUpType::SPEED)
+		{
+			Renderer::Instance()->PushSprite("POWERUP", POWER_UP_SPEED, powerUpList[i]->GetRect());
+		}
+
+	}
+
 	if (playerLeft.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));
-	else if (playerLeft.GetHP() >= 2)
+	if (playerLeft.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(2));
-	else if (playerLeft.GetHP() >= 1)
+	if (playerLeft.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(1));
 
 	if (playerRight.GetHP() >= 3)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(3));
-	else if (playerRight.GetHP() >= 2)
+	if (playerRight.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(2));
-	else if (playerRight.GetHP() >= 1)
+	if (playerRight.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(1));
 
 	if (sceneStatus == sceneState::PAUSED)

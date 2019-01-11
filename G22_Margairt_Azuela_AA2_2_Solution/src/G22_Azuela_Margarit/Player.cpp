@@ -12,7 +12,7 @@ Player::Player()
 	puntuationText.font.path = MENU_FONT;
 	puntuationText.font.id = "PUNTUATION_FONT";
 	puntuationText.rect = { 0, 0, 100,40 };
-	speed = 4;
+	speed = 3;
 	PlayerRect.proportions = { PLAYER_WIDTH, PLAYER_HEIGHT };
 	HP = 3;
 	for(int i = 0; i < HP; i++) hpBAR[i] = { 0 , 0 , PLAYER_HEIGHT  , PLAYER_WIDTH };
@@ -127,4 +127,10 @@ void Player::SetPosHealth(int x, int y, int numHP)
 {
 	hpBAR[numHP-1].position.x = x;
 	hpBAR[numHP-1].position.y = y;
+}
+
+void Player::SetProportions(int x, int y)
+{
+	PlayerRect.proportions.x = x;
+	PlayerRect.proportions.y = y;
 }

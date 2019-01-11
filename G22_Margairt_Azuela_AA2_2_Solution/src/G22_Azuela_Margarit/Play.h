@@ -24,6 +24,8 @@ private:
 	MyText pause;
 	MyText soundOnSwitch;
 	std::vector<Brick> brickList;
-
+	int lastPlayer;
+	int spawnPlayer;
+	bool gameOver;
 };
 

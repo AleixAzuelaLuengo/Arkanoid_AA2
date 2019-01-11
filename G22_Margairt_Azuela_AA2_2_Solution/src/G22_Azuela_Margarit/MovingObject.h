@@ -17,7 +17,7 @@ public:
 	};
 	MovingObject();
 	template <class T> void Move(T object, Vector2 speed);
-	int BallBounce(Rect ball, Rect obj);
+	int BallBounce(Rect ball, Rect obj, Vector2 ballSpeed);
 	bool Collision(Rect ball, Rect collision);
 	bool MouseCollision(Rect obj1, Inputs Mouse);
 	Vector2 ballLimits(Vector2 ballP, const Vector2 ballS);

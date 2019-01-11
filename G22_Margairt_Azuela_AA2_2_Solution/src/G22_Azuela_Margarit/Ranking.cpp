@@ -7,18 +7,6 @@ Ranking::Ranking()
 {
 	
 	ReadFile();
-	for (int i = 0; i < rankingList.size(); i++)
-	{
-		//char *temp(*rankingList[i].first)); //+ ' ' + std::to_string(rankingList[i].second) ;
-		ranking[i].text = "VRL  " + std::to_string(rankingList[i].second);
-		ranking[i].idColor = White;
-		ranking[i].font.id = "ARKANOID_FONT";
-		ranking[i].font.path = MENU_FONT;
-		ranking[i].font.size = 20;
-		ranking[i].rect.proportions = { 300, 40 };
-		ranking[i].rect.position.x = SCREEN_WIDTH / 2 - ranking[i].rect.proportions.x/2;
-		ranking[i].rect.position.y = ranking[i].rect.proportions.y + i * ranking[i].rect.proportions.y;
-	}
 	for (int i = 0; i < rankingList.size(); i++) Renderer::Instance()->LoadTextureText(ranking[i].font.id, ranking[i]);
 
 }
@@ -65,6 +53,7 @@ void Ranking::ReadFile()
 		myFileIn.read(reinterpret_cast<char*> (&a), sizeof(char) * 4);
 		myFileIn.read(reinterpret_cast<char*> (&temp2.second), sizeof(int));
 		temp2.first = a;
+		ranking[i].text = a;
 		rankingList.push_back(temp2);
 	}
 	myFileIn.close();
@@ -75,6 +64,20 @@ void Ranking::ReadFile()
 	
 	Sort(rankingList);
 	rankingList.pop_back();
+
+	for (int i = 0; i < rankingList.size(); i++)
+	{
+		ranking[i].text += "  " + std::to_string(rankingList[i].second);
+		ranking[i].idColor = White;
+		ranking[i].font.id = "ARKANOID_FONT";
+		ranking[i].font.path = MENU_FONT;
+		ranking[i].font.size = 20;
+		ranking[i].rect.proportions = { 300, 40 };
+		ranking[i].rect.position.x = SCREEN_WIDTH / 2 - ranking[i].rect.proportions.x / 2;
+		ranking[i].rect.position.y = ranking[i].rect.proportions.y + i * ranking[i].rect.proportions.y;
+	}
+
+	
 
 	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
 	for (int i = 0; i < rankingList.size(); i++)

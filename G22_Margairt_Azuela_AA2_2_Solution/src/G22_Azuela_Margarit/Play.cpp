@@ -324,12 +324,15 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 	if (playerLeft.GetHP() == 0 || playerRight.GetHP() == 0)
 	{
-		char* name = nullptr;
+		char name[4];
 		std::cout << "Instert a Username" << std::endl;
 		std::cin >> name;
 		newPlayer.first = name;
 		if (playerLeft.GetHP() == 0) newPlayer.second = playerRight.GetPuntuation();
 		if(playerRight.GetHP() == 0) newPlayer.second =  playerLeft.GetPuntuation();
+		ReadFile();
+		sceneStatus = sceneState::EXIT;
+		gameState = stateType::RANKING;
 
 	}
 }
@@ -376,18 +379,18 @@ void Play::Draw()
 		}
 	}
 
-	if (playerLeft.GetHP() >= 3)
+	if (playerLeft.GetHP() == 3)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(3));
-	else if (playerLeft.GetHP() >= 2)
+	if (playerLeft.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(2));
-	else if (playerLeft.GetHP() >= 1)
+	if (playerLeft.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerLeft.GetHPBar(1));
 
-	if (playerRight.GetHP() >= 3)
+	if (playerRight.GetHP() == 3)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(3));
-	else if (playerRight.GetHP() >= 2)
+	if (playerRight.GetHP() >= 2)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(2));
-	else if (playerRight.GetHP() >= 1)
+	if (playerRight.GetHP() >= 1)
 		Renderer::Instance()->PushImage("PLAYER", playerRight.GetHPBar(1));
 
 	if (sceneStatus == sceneState::PAUSED)

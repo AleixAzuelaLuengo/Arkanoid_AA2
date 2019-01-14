@@ -6,6 +6,7 @@
 #include "Map.h"
 #include "Scene.h"
 #include "PowerUp.h"
+#include <chrono>
 
 class Play: public Scene
 {
@@ -33,5 +34,6 @@ private:
 	int lastPlayer;
 	int spawnPlayer;
 	bool gameOver;
+	std::chrono::system_clock::time_point powerUpSec[2];
 };
 

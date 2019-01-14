@@ -123,6 +123,11 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			if (spawnPlayer == 1)
 				ball.SetPosition(playerRight.GetRect().position.x - playerRight.GetRect().proportions.x * 2, playerRight.GetRect().position.y + playerRight.GetRect().proportions.y / 2 - ball.GetRect().proportions.y / 2);
 		}
+
+		Vector2 aux = MovingObject::Instance()->playerLimits(playerLeft.GetPosition(), playerLeft.GetSpeed());
+		playerLeft.SetPosition(aux.x, aux.y);
+		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition(), playerRight.GetSpeed());
+		playerRight.SetPosition(aux.x, aux.y);
 	}
 	else if (sceneStatus == sceneState::RUNNING && !gameOver)
 	{
@@ -152,11 +157,11 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		{
 			sceneStatus = sceneState::PAUSED;
 		}
-		Vector2 aux = MovingObject::Instance()->playerLimits(playerLeft.GetPosition());
+		Vector2 aux = MovingObject::Instance()->playerLimits(playerLeft.GetPosition(), playerLeft.GetSpeed());
 		playerLeft.SetPosition(aux.x, aux.y);
 		
 
-		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition());
+		aux = MovingObject::Instance()->playerLimits(playerRight.GetPosition(), playerRight.GetSpeed());
 		playerRight.SetPosition(aux.x, aux.y);
 		int collision;
 		for (int i = 0; i < brickList.size(); i++)
@@ -213,10 +218,21 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 								powerUp->SetPowerUpType(powerUpType::SPEED);
 								break;
 									
-							}
-							
+							}							
 							powerUpList.push_back(powerUp);
+
 						}
+						if (lastPlayer == 0)
+						{
+							playerLeft.SetPuntuation(playerLeft.GetPuntuation() + brickList[i].GetPuntuation());
+						}
+						else
+						{
+							playerRight.SetPuntuation(playerRight.GetPuntuation() + brickList[i].GetPuntuation());
+						}
+
+							
+						
 					}
 
 				}
@@ -285,7 +301,10 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			sceneStatus = sceneState::START_GAME;
 			spawnPlayer = 0;
 			playerLeft.SetHp(playerLeft.GetHP()-1);
-			
+			if (playerLeft.GetPuntuation() > 50) playerLeft.SetPuntuation(playerLeft.GetPuntuation() - 50);
+			else playerLeft.SetPuntuation(0);
+
+			playerRight.SetPuntuation(playerRight.GetPuntuation() + 100);
 		}
 		else if (ball.GetSpeed().x == 1)
 		{
@@ -294,17 +313,27 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			sceneStatus = sceneState::START_GAME;
 			spawnPlayer = 1;
 			playerRight.SetHp(playerRight.GetHP() - 1);
+
+			if (playerRight.GetPuntuation() > 50) playerRight.SetPuntuation(playerRight.GetPuntuation() - 50);
+			else playerRight.SetPuntuation(0);
+
+			playerLeft.SetPuntuation(playerLeft.GetPuntuation() + 100);
 		}
 		ball.SetPosition(ball.GetPosition().x + ball.GetSpeed().x, ball.GetPosition().y + ball.GetSpeed().y);
 
-		playerLeft.SetPuntuation((playerLeft.GetPuntuation()));
 		playerLeft.SetText(playerLeft.GetPuntuation());
 		Renderer::Instance()->LoadTextureText(playerLeft.GetText().font.id, playerLeft.GetText());
+		 
+		playerRight.SetText(playerRight.GetPuntuation());
+		Renderer::Instance()->LoadTextureText(playerRight.GetText().font.id, playerRight.GetText());
+
 
 		for (int i = 0; i < powerUpList.size(); i++)
 		{
 			if (MovingObject::Instance()->Collision(playerLeft.GetRect(), powerUpList[i]->GetRect()))
 			{
+				playerLeft.SetProportions(PLAYER_WIDTH, PLAYER_HEIGHT);
+				playerLeft.SetSpeed(3);
 				switch (powerUpList[i]->GetType())
 				{
 				case 0:
@@ -319,11 +348,13 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 				default:
 					break;
 				}
-
+				powerUpSec[0] = std::chrono::system_clock::now();
 				powerUpList.erase(powerUpList.begin() + i);
 			}
 			else if (MovingObject::Instance()->Collision(playerRight.GetRect(), powerUpList[i]->GetRect()))
 			{
+				playerRight.SetProportions(PLAYER_WIDTH, PLAYER_HEIGHT);
+				playerRight.SetSpeed(3);
 				switch (powerUpList[i]->GetType())
 				{
 				case 0:
@@ -338,12 +369,27 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 				default:
 					break;
 				}
-
+				powerUpSec[1] = std::chrono::system_clock::now();
 				powerUpList.erase(powerUpList.begin() + i);
 			}
 		}
 		
+		std::chrono::duration<double> elapsed = std::chrono::system_clock::now() - powerUpSec[0];
 
+		if (elapsed.count() >= 10)
+		{
+			playerLeft.SetProportions(PLAYER_WIDTH, PLAYER_HEIGHT);
+			playerLeft.SetSpeed(3);
+		}
+
+		elapsed = std::chrono::system_clock::now() - powerUpSec[1];
+		if (elapsed.count() >= 10)
+		{
+			playerRight.SetProportions(PLAYER_WIDTH, PLAYER_HEIGHT);
+			playerRight.SetSpeed(3);
+		}
+		
+		
 
 		for (int i = 0; i < powerUpList.size(); i++)
 		{
@@ -416,6 +462,10 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 
 void Play::Draw()
 {
+	if (playerLeft.GetPuntuation() > 0)
+	{
+		int x = 0;
+	}
 
 	Renderer::Instance()->Render();
 	Renderer::Instance()->PushImage("BG_MENU", BG);
@@ -424,7 +474,6 @@ void Play::Draw()
 	Renderer::Instance()->PushImage("BALL", ball.GetRect());
 	Renderer::Instance()->PushImage(playerLeft.GetText().font.id, playerLeft.GetText().rect);
 	Renderer::Instance()->PushImage(playerRight.GetText().font.id, playerRight.GetText().rect);
-
 
 	for (int i = 0; i < brickList.size(); i++)
 	{

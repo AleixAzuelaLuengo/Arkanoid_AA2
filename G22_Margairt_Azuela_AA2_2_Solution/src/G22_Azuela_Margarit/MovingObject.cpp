@@ -75,12 +75,12 @@ Vector2 MovingObject::ballLimits(Vector2 ballP, Vector2 ballS)
 
 
 
-Vector2 MovingObject::playerLimits(Vector2 p)
+Vector2 MovingObject::playerLimits(Vector2 p, int speed)
 {
 	if (p.y < MAP_START_X_AND_Y)
-		p.y += 4;
+		p.y += speed;
 	if (p.y + PLAYER_HEIGHT > MAP_END_Y + 15 )
-		p.y -= 4;
+		p.y -= speed;
 	return p;
 }
 

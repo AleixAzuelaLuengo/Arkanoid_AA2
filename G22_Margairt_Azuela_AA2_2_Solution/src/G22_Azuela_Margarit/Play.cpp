@@ -372,6 +372,10 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 				powerUpSec[1] = std::chrono::system_clock::now();
 				powerUpList.erase(powerUpList.begin() + i);
 			}
+			else if (powerUpList[i]->GetPosition().x <= MAP_START_X_AND_Y || powerUpList[i]->GetPosition().x >= MAP_END_X)
+			{
+				powerUpList.erase(powerUpList.begin() + i);
+			}
 		}
 		
 		std::chrono::duration<double> elapsed = std::chrono::system_clock::now() - powerUpSec[0];

@@ -31,7 +31,12 @@ const Rect REDBLOCK_FIRST = { 0,20, 40, 20 };
 const Rect GREENBLOCK_SECOND = { 40,0, 40, 20 };
 const Rect REDBLOCK_SECOND = { 40,20, 40, 20 };
 const Rect GREENBLOCK_THIRD = { 80,0, 40, 20 };
+const Rect GREENBLOCK_FOURTH = { 120,0, 40, 20 };
+const Rect GREENBLOCK_FIFTH = { 160,0, 40, 20 };
 const Rect REDBLOCK_THIRD = { 80,20, 40, 20 };
+const Rect REDBLOCK_FOURTH = { 120,20, 40, 20 };
+const Rect REDBLOCK_FIFTH = { 160,20, 40, 20 };
 const Rect FIXEDBLOCK_FIRST = { 0,40, 40, 20 };
 const Rect FIXEDBLOCK_SECOND = { 40,40, 40, 20 };
+const int PROPORTIONS_BLOCKS = 40;
 #define FPS 60

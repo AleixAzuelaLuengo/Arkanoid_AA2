@@ -22,12 +22,18 @@ public:
 	int GetHP();
 	void SetType(char);
 	char GetType();
+	Rect GetSpriteRect();
+	int GetNumAnimation();
+	void Animate();
 private:
 	Rect brickRect;
+	Rect spriteRect;
 	int puntuation;
+	int frameTimeSprite = 0;
 	int probability;
 	int hp;
 	char type;
+	int numAnimation;
 	int id;
 };
 

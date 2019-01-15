@@ -129,6 +129,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 	{
 		exit.idColor = ButtonNotSelected;
 	}
+
 	Renderer::Instance()->LoadTextureText(startGame.font.id, startGame);
 	Renderer::Instance()->LoadTextureText(soundOnSwitch.font.id, soundOnSwitch);
 	Renderer::Instance()->LoadTextureText(ranking.font.id, ranking);

@@ -23,6 +23,12 @@ private:
 	//Brick *brickList[][];
 	SDL_Event event;
 	MyText pause;
+	MyText name[3];
+	MyText winningPlayer;
+	MyText startGame[2];
+	char nameChar[4];
+	int i = 0;
+	int j = 0;
 	MyText soundOnSwitch;
 	std::vector<Brick> brickList;
 	std::pair<char *, int> newPlayer;
@@ -30,6 +36,7 @@ private:
 	void ReadFile();
 	int lastPlayer;
 	int spawnPlayer;
+	char abecedario[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	bool gameOver;
 };
 

@@ -57,6 +57,9 @@ void GameManager::Update()
 				case(SDLK_ESCAPE):
 					SetInput(false, Inputs::InputType::Quit);
 					break;
+				case(SDLK_RETURN):
+					SetInput(false, Inputs::InputType::Enter);
+					break;
 				case(SDLK_w):
 					SetInput(false, Inputs::InputType::W);
 					break;
@@ -84,6 +87,9 @@ void GameManager::Update()
 				{
 				case(SDLK_ESCAPE):
 					SetInput(true, Inputs::InputType::Quit);
+					break;
+				case(SDLK_RETURN):
+					SetInput(true, Inputs::InputType::Enter);
 					break;
 				case(SDLK_w):
 					SetInput(true, Inputs::InputType::W);

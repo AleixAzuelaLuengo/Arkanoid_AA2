@@ -60,6 +60,15 @@ void Ranking::ReadFile()
 		ranking[i].text = a;
 		rankingList.push_back(temp2);
 	}
+	for (int i = 0; i < 10; i++)
+	{
+		int b;
+		char a[4];
+		myFileIn.read(reinterpret_cast<char*> (&a), sizeof(char) * 4);
+		myFileIn.read(reinterpret_cast<char*> (&b), sizeof(int));
+		rankingList[i].first = a;
+	}
+	
 	myFileIn.close();
 
 	temp.first = newPlayer.first;
@@ -95,7 +104,6 @@ void Ranking::ReadFile()
 	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
 	for (int i = 0; i < rankingList.size(); i++)
 	{
-		std::cout << rankingList[i].first << " : " << rankingList[i].second << std::endl;
 		char *a = rankingList[i].first;
 		int b = rankingList[i].second;
 		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
@@ -114,7 +122,6 @@ void Ranking::ReadFile()
 		myFile.write(reinterpret_cast<char*> (&b), sizeof(b));
 	}
 	myFile.close(); */
-
 }
 
 void Ranking::Sort(std::vector<std::pair<char*, int>> &a)

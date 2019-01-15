@@ -22,6 +22,7 @@ private:
 	void ReadFile();
 	void Sort(std::vector<std::pair<char *, int>> &a);
 	MyText ranking[10];
+
 protected:
 	
 };

@@ -444,8 +444,6 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, 
 				playerRight.SetSpeed(3);
 			}
 
-
-
 			for (int i = 0; i < powerUpList.size(); i++)
 			{
 				powerUpList[i]->SetPosition(powerUpList[i]->GetPosition().x + powerUpList[i]->GetSpeed(), powerUpList[i]->GetPosition().y);
@@ -526,6 +524,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, 
 		{
 			nameChar[j] = abecedario[i];
 			j++;
+			i = 0;
 			input.SetInput(input.Enter, false);
 		}
 
@@ -660,7 +659,7 @@ void Play::ReadFile()
 	{
 		char *a = temp[i].first;
 		int b = temp[i].second;
-		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
+		myFile.write(reinterpret_cast<const char*> (a), sizeof(char) * 4);
 		myFile.write(reinterpret_cast<const char*> (&b), sizeof(int));
 	}
 	myFile.close();

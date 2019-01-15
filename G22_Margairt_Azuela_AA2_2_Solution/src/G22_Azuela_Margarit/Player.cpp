@@ -7,10 +7,9 @@ Player::Player()
 {
 	puntuation = 0;
 	puntuationText.text = "Points: " + std::to_string(puntuation);
-	puntuationText.font.size = 8;
+	puntuationText.font.size = 80;
 	puntuationText.idColor = Black;
 	puntuationText.font.path = MENU_FONT;
-	puntuationText.font.id = "PUNTUATION_FONT";
 	puntuationText.rect = { 0, 0, 100,40 };
 	speed = 3;
 	PlayerRect.proportions = { PLAYER_WIDTH, PLAYER_HEIGHT };
@@ -73,6 +72,7 @@ int Player::GetPuntuation()
 void Player::SetPuntuation(int newPunt)
 {
 	puntuation = newPunt;
+	puntuationText.text = "Points: " + std::to_string(puntuation);
 }
 
 
@@ -133,4 +133,14 @@ void Player::SetProportions(int x, int y)
 {
 	PlayerRect.proportions.x = x;
 	PlayerRect.proportions.y = y;
+}
+
+void Player::SetId(std::string a)
+{
+	puntuationText.font.id = a;
+}
+
+Font Player::GetFont()
+{
+	return puntuationText.font;
 }

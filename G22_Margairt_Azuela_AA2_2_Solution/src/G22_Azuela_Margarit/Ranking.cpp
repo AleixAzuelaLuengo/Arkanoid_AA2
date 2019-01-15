@@ -7,7 +7,11 @@ Ranking::Ranking()
 {
 	
 	ReadFile();
-	for (int i = 0; i < rankingList.size(); i++) Renderer::Instance()->LoadTextureText(ranking[i].font.id, ranking[i]);
+	for (int i = 0; i < rankingList.size(); i++)
+	{
+		Renderer::Instance()->LoadFont(ranking[i].font);
+		Renderer::Instance()->LoadTextureText(ranking[i].font.id, ranking[i]);
+	}
 
 }
 
@@ -69,7 +73,6 @@ void Ranking::ReadFile()
 	{
 		ranking[i].text += "  " + std::to_string(rankingList[i].second);
 		ranking[i].idColor = White;
-		ranking[i].font.id = "ARKANOID_FONT";
 		ranking[i].font.path = MENU_FONT;
 		ranking[i].font.size = 20;
 		ranking[i].rect.proportions = { 300, 40 };
@@ -77,6 +80,16 @@ void Ranking::ReadFile()
 		ranking[i].rect.position.y = ranking[i].rect.proportions.y + i * ranking[i].rect.proportions.y;
 	}
 
+	ranking[1].font.id = "FIRST_PLAYER";
+	ranking[2].font.id = "SECOND_PLAYER";
+	ranking[3].font.id = "THIRD_PLAYER";
+	ranking[4].font.id = "FOURTH_PLAYER";
+	ranking[5].font.id = "FIFTH_PLAYER";
+	ranking[6].font.id = "SIXTH_PLAYER";
+	ranking[7].font.id = "SEVENTH_PLAYER";
+	ranking[8].font.id = "EIGHT_PLAYER";
+	ranking[9].font.id = "NINETH_PLAYER";
+	ranking[0].font.id = "TENTH_PLAYER";
 	
 
 	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);

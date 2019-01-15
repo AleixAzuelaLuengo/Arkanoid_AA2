@@ -85,7 +85,3 @@ Vector2 MovingObject::playerLimits(Vector2 p, int speed)
 }
 
 
-
-
-
-MovingObject *MovingObject::movingObject = nullptr;

@@ -192,12 +192,6 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		}
 		else if (sceneStatus == sceneState::RUNNING && !gameOver)
 		{
-			if (input.GetInput(Inputs::InputType::Quit))
-			{
-				sceneStatus = sceneState::EXIT;
-				gameState = stateType::MENU;
-				input.SetInput(Inputs::InputType::Quit, false);
-			}
 			if (input.GetInput(input.W))
 			{
 				playerLeft.MoveUp();
@@ -474,6 +468,12 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		}
 		else if (sceneStatus == sceneState::PAUSED)
 		{
+			if (input.GetInput(Inputs::InputType::Quit))
+			{
+				sceneStatus = sceneState::EXIT;
+				gameState = stateType::MENU;
+				input.SetInput(Inputs::InputType::Quit, false);
+			}
 			if (input.GetInput(input.SpaceBar))
 			{
 				sceneStatus = sceneState::RUNNING;

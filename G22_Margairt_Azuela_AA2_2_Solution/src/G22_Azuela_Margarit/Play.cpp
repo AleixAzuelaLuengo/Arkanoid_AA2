@@ -69,7 +69,7 @@ Play::~Play()
 {
 }
 
-void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
+void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music)
 {
 	if (sceneStatus == sceneState::START_GAME)
 	{
@@ -238,7 +238,7 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 				}
 			}
 		}
-
+		
 		collision = MovingObject::Instance()->BallBounce(ball.GetRect(), playerLeft.GetRect(), ball.GetSpeed());
 		if (collision != 0)
 		{
@@ -418,11 +418,13 @@ void Play::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 			if (soundOnSwitch.text == "Sound On" && input.GetInput(Inputs::LeftClick))
 			{
 				soundOnSwitch.text = "Sound Off";
+				music.PauseMusic();
 				input.SetInput(Inputs::InputType::LeftClick, false);
 			}
 			else if (soundOnSwitch.text == "Sound Off" && input.GetInput(Inputs::LeftClick))
 			{
 				soundOnSwitch.text = "Sound On";
+				music.ResumeMusic();
 				input.SetInput(Inputs::InputType::LeftClick, false);
 			}
 		}
@@ -580,17 +582,6 @@ void Play::ReadFile()
 	}
 	myFile.close();
 
-	/*char x[4] = "VRL";
-	char *a = x;
-	int b = 200;
-
-	std::ofstream myFile("../../res/files/ranking.bin", std::ios::out | std::ios::binary);
-	for (int i = 0; i < 10; i++)
-	{
-		myFile.write(reinterpret_cast<char*> (a), sizeof(char) * 4);
-		myFile.write(reinterpret_cast<char*> (&b), sizeof(b));
-	}
-	myFile.close(); */
 
 }
 

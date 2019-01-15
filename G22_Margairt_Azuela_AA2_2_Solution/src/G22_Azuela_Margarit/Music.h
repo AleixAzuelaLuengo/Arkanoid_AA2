@@ -11,8 +11,8 @@ public:
 	Music();
 	~Music();
 	void LoadMusic();
-	//void PauseMusic(Mix_Music);
-	//void ResumeMusi(Mix_Music);
+	void PauseMusic();
+	void ResumeMusic();
 private:
 	Mix_Music *track;
 	

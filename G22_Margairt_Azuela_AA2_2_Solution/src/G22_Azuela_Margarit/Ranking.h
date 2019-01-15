@@ -6,12 +6,14 @@
 #include "Types.h"
 #include "MovingObject.h"
 #include <algorithm>
+#include "Music.h"
+
 class Ranking: public Scene
 {
 public:
 	Ranking();
 	~Ranking();
-	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState );
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music);
 	void Draw();
 	void setNewPlayer(char *, int);
 private:

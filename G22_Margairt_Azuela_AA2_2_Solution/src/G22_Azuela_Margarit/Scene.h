@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Inputs.h"
+#include "Music.h"
 
 class Scene
 {
@@ -13,7 +14,7 @@ public:
 	enum sceneState { START_GAME, RUNNING, PAUSED, EXIT }sceneStatus = sceneState::EXIT;
 	enum stateType { SPLASHSCREEN, MENU, PLAY, RANKING, END }gameState = stateType::SPLASHSCREEN;
 	
-	virtual void Update(Inputs &input,sceneState &sceneStatus, stateType &gameState) = 0;
+	virtual void Update(Inputs &input,sceneState &sceneStatus, stateType &gameState, Music &music) = 0;
 	virtual void Draw() = 0;
 
 private:

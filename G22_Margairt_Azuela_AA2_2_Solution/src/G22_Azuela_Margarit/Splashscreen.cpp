@@ -22,7 +22,7 @@ Splashscreen::~Splashscreen()
 {
 }
 
-void Splashscreen::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
+void Splashscreen::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music)
 {
 	sec += DELAY_TIME;
 	if (sec >= 3000)

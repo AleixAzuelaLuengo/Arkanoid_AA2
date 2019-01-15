@@ -3,13 +3,14 @@
 #include "Types.h"
 #include "Constants.h"
 #include "Renderer.h"
+#include "Music.h"
 
 class Splashscreen: public Scene
 { 
 public:
 	Splashscreen();
 	~Splashscreen();
-	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music);
 	void Draw();
 
 private:

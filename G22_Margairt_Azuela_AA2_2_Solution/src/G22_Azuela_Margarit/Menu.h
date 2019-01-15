@@ -1,13 +1,14 @@
 #pragma once
 #include "Types.h"
 #include "Scene.h"
+#include "Music.h"
 
 class Menu: public Scene
 {
 public:
 	Menu();
 	~Menu();
-	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music);
 	void Draw();
 private:
 	Rect BG;

@@ -17,7 +17,7 @@ Ranking::~Ranking()
 	
 }
 
-void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
+void Ranking::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music)
 {
 	if (input.GetInput(Inputs::InputType::Quit))
 	{

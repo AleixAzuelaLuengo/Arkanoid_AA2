@@ -7,13 +7,14 @@
 #include "Scene.h"
 #include "PowerUp.h"
 #include <chrono>
+#include "Music.h"
 
 class Play: public Scene
 {
 public:
 	Play();
 	~Play();
-	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
+	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music);
 	void Draw();
 private:
 	Rect BG;

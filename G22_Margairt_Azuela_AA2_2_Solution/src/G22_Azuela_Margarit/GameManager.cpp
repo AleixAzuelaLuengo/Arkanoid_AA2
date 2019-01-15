@@ -169,7 +169,7 @@ void GameManager::Update()
 
 	
 	//Update de la escena en la que nos encontramos
-	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
+	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState, music);
 }
 
 void GameManager::Draw()

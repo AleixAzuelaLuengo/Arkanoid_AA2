@@ -58,7 +58,7 @@ Menu::~Menu()
 	Renderer::Instance()->Clear();
 }
 
-void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
+void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState, Music &music)
 {
 	if (input.GetInput(Inputs::InputType::Quit))
 	{
@@ -102,11 +102,13 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		if (soundOnSwitch.text == "Sound On" && input.GetInput(Inputs::LeftClick))
 		{
 			soundOnSwitch.text = "Sound Off";
+			music.PauseMusic();
 			input.SetInput(Inputs::InputType::LeftClick, false);
 		}
 		else if (soundOnSwitch.text == "Sound Off" && input.GetInput(Inputs::LeftClick))
 		{
 			soundOnSwitch.text = "Sound On";
+			music.ResumeMusic();
 			input.SetInput(Inputs::InputType::LeftClick, false);
 		}
 			

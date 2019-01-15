@@ -10,7 +10,6 @@ public:
 	void SetSpeed(int);
 	int GetSpeed();
 	Rect GetFlipedRect();
-	Rect GetImageFlippedRect();
 	void SetPosition(int x, int y );
 	int GetHP();
 	void SetHp(int);
@@ -26,7 +25,11 @@ public:
 	void SetText(int);
 	void SetTextPos(int x, int y);
 	void SetPosHealth(int x, int y, int numHP);
+	void SetProportions(int, int);
+	void SetId(std::string a);
+	Font GetFont();
 private:
+
 	int HP;
 	Rect hpBAR[3];
 	MyText puntuationText;

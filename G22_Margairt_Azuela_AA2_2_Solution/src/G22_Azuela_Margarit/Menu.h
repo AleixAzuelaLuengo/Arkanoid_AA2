@@ -1,7 +1,7 @@
 #pragma once
 #include "Types.h"
 #include "Scene.h"
-
+#include "MovingObject.h"
 class Menu: public Scene
 {
 public:
@@ -10,6 +10,7 @@ public:
 	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
 	void Draw();
 private:
+	MovingObject object;
 	Rect BG;
 	MyText startGame;
 	MyText ranking;

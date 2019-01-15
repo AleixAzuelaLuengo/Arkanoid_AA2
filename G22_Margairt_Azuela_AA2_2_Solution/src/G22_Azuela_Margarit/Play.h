@@ -5,6 +5,9 @@
 #include "Ranking.h"
 #include "Map.h"
 #include "Scene.h"
+#include "PowerUp.h"
+#include "MovingObject.h"
+#include <chrono>
 
 class Play: public Scene
 {
@@ -14,6 +17,7 @@ public:
 	void Update(Inputs &input, sceneState &sceneStatus, stateType &gameState);
 	void Draw();
 private:
+	MovingObject object;
 	Rect BG;
 	Rect PauseBG;
 	Player playerLeft;
@@ -31,6 +35,7 @@ private:
 	int j = 0;
 	MyText soundOnSwitch;
 	std::vector<Brick> brickList;
+	std::vector<PowerUp*> powerUpList;
 	std::pair<char *, int> newPlayer;
 	void Sort(std::vector<std::pair<char*, int>> &a);
 	void ReadFile();
@@ -38,5 +43,6 @@ private:
 	int spawnPlayer;
 	char abecedario[27] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	bool gameOver;
+	std::chrono::system_clock::time_point powerUpSec[2];
 };
 

@@ -1,9 +1,22 @@
 #pragma once
+#include "Types.h"
+#include "Constants.h"
 class PowerUp
 {
 public:
-	enum powerUpType{EXTRA_LENGTH, MINI_LENGTH, SPEED, END};
+	
 	PowerUp();
 	~PowerUp();
+	void SetSpeed(int);
+	int GetSpeed();
+	Vector2 GetPosition();
+	void SetPosition(int x, int y);
+	Rect GetRect();
+	void SetPowerUpType(powerUpType);
+	powerUpType GetType();
+private:
+	powerUpType type;
+	int speed;
+	Rect powerUpRect;
 };
 

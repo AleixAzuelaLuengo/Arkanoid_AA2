@@ -6,6 +6,7 @@
 #include "Play.h"
 #include "Splashscreen.h"
 #include "Ranking.h"
+#include "Music.h"
 
 
 class GameManager
@@ -25,5 +26,7 @@ private:
 	Inputs inputs;
 	Scene *currentScene;
 	SDL_Event event;
+	Music music;
+	bool loadMusic;
 };
 

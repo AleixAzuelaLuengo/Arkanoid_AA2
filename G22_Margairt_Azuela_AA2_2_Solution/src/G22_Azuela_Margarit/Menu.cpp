@@ -67,7 +67,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		input.SetInput(Inputs::InputType::Quit, false);
 	}
 	//Si el ratolí està a sobre d'un text canviarà el color
-	if (MovingObject::Instance()->MouseCollision(startGame.rect, input))
+	if (object.MouseCollision(startGame.rect, input))
 	{
 		startGame.idColor = ButtonSelected;
 		if (input.GetInput(Inputs::LeftClick))
@@ -81,7 +81,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		startGame.idColor = ButtonNotSelected;
 	}
 
-	if (MovingObject::Instance()->MouseCollision(ranking.rect, input))
+	if (object.MouseCollision(ranking.rect, input))
 	{
 		ranking.idColor = ButtonSelected;
 		if (input.GetInput(Inputs::LeftClick))
@@ -95,7 +95,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		ranking.idColor = ButtonNotSelected;
 	}
 
-	if (MovingObject::Instance()->MouseCollision(soundOnSwitch.rect, input))
+	if (object.MouseCollision(soundOnSwitch.rect, input))
 	{
 		soundOnSwitch.idColor = ButtonSelected;
 
@@ -116,7 +116,7 @@ void Menu::Update(Inputs &input, sceneState &sceneStatus, stateType &gameState)
 		soundOnSwitch.idColor = ButtonNotSelected;
 	}
 
-	if (MovingObject::Instance()->MouseCollision(exit.rect, input))
+	if (object.MouseCollision(exit.rect, input))
 	{
 		exit.idColor = ButtonSelected;
 		if (input.GetInput(Inputs::LeftClick))

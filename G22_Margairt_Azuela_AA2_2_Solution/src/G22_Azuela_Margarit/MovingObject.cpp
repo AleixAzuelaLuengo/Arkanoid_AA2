@@ -41,13 +41,13 @@ int MovingObject::BallBounce(Rect ball, Rect obj, Vector2 ballSpeed)
 
 
 
-bool MovingObject::Collision(Rect ball, Rect collision)
+bool MovingObject::Collision(Rect player, Rect collision)
 {
-
-	if ((ball.position.x > collision.position.x + collision.proportions.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
-	if ((ball.position.x + ball.proportions.x > collision.position.x) && (ball.position.x + ball.proportions.x < (collision.position.x + collision.proportions.x)) && (ball.position.y > collision.position.y) && (ball.position.y < (collision.position.y + collision.proportions.y))) return true;
-	if ((ball.position.x > collision.position.x) && (ball.position.x < (collision.position.x + collision.proportions.x)) && (ball.position.y + ball.proportions.y > collision.position.y) && (ball.position.y + ball.proportions.y < (collision.position.y + collision.proportions.y))) return true;
-	if ((ball.position.x + ball.proportions.x > collision.position.x) && (ball.position.x + ball.proportions.x < (collision.position.x + collision.proportions.x)) && (ball.position.y + ball.proportions.y > collision.position.y) && (ball.position.y + ball.proportions.y < (collision.position.y + collision.proportions.y))) return true;
+	if (((collision.position.x + collision.proportions.x) >= player.position.x) && (collision.position.x <= (player.position.x + player.proportions.x)) &&
+		((collision.position.y + collision.proportions.y) >= player.position.y) && (collision.position.y <= (player.position.y + player.proportions.y)))
+	{
+		return true;
+	}
 
 	return false;
 }
@@ -75,17 +75,13 @@ Vector2 MovingObject::ballLimits(Vector2 ballP, Vector2 ballS)
 
 
 
-Vector2 MovingObject::playerLimits(Vector2 p)
+Vector2 MovingObject::playerLimits(Vector2 p, int speed)
 {
 	if (p.y < MAP_START_X_AND_Y)
-		p.y += 5;
-	if (p.y + PLAYER_HEIGHT > MAP_END_Y )
-		p.y -= 5;
+		p.y += speed;
+	if (p.y + PLAYER_HEIGHT > MAP_END_Y + 15 )
+		p.y -= speed;
 	return p;
 }
 
 
-
-
-
-MovingObject *MovingObject::movingObject = nullptr;

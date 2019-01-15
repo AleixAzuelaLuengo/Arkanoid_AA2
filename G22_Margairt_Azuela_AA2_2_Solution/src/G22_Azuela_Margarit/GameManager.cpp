@@ -6,6 +6,7 @@
 GameManager::GameManager()
 {
 	currentScene = new Menu();
+	loadMusic = false;
 }
 
 
@@ -150,6 +151,11 @@ void GameManager::Update()
 		case Scene::stateType::MENU:
 			delete currentScene;
 			currentScene = new Menu();
+			if (!loadMusic)
+			{
+				music.LoadMusic();
+				loadMusic = true;
+			}
 			break;
 		case Scene::stateType::PLAY:
 			delete currentScene;
@@ -166,6 +172,8 @@ void GameManager::Update()
 		}
 			currentScene->sceneStatus = currentScene->sceneState::START_GAME;
 	}
+
+	
 	//Update de la escena en la que nos encontramos
 	currentScene->Update(inputs, currentScene->sceneStatus, currentScene->gameState);
 }
